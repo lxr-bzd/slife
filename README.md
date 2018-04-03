@@ -4,8 +4,14 @@ qq群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=3d00028ad6bec03e9
 <br>
 ## qq群 421351927
 
+## 或者加入我的知识星球
+![](https://github.com/javanan/slife/blob/master/dec/333.jpg?raw=true)
+
 # **[小福利 点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/act/ambassador/sharetouser.html?userCode=vf2b5zld&utm_source=vf2b5zld)**
 
+
+## 感谢码云的支持
+![](https://github.com/javanan/slife/blob/master/dec/222.jpg?raw=true)
 
 
 # slife
