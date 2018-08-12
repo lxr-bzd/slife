@@ -64,6 +64,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.slife</groupId>
+            <artifactId>slife-activiti</artifactId>
+        </dependency>
 
     </dependencies>
 

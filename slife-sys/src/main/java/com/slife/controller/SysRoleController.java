@@ -11,7 +11,6 @@ import com.slife.service.ISysRoleService;
 import com.slife.util.ReturnDTOUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +43,7 @@ public class SysRoleController extends BaseController {
      * @param model
      * @return
      */
-    @RequiresPermissions("sys:role:list")
+//    @RequiresPermissions("sys:role:list")
     @GetMapping(value = "")
     public String list(Model model, HttpServletRequest request) {
         model.addAttribute("url", request.getContextPath() + "/sys/role/");

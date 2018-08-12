@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -124,7 +123,7 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
      * @return
      */
 
-    @Cacheable(cacheNames="books", key="#userId")
+//    @Cacheable(cacheNames="menu", key="#userId")
     @Override
     public List<SysMenu> CaseMenu(Long userId) {
         Map<Long, List<SysMenu>> map = new HashMap();

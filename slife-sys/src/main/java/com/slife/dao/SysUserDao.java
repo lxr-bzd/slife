@@ -1,7 +1,6 @@
 package com.slife.dao;
 
 
-import com.baomidou.mybatisplus.plugins.Page;
 import com.slife.base.dao.CrudDao;
 import com.slife.entity.SysUser;
 import org.apache.ibatis.annotations.Param;

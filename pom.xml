@@ -36,7 +36,7 @@
         <sitemesh.version>3.0.1</sitemesh.version>
         <mybatisplus-spring-boot-starter.version>1.0.4</mybatisplus-spring-boot-starter.version>
         <drools.version>7.5.0.Final</drools.version>
-
+        <lombok.version>1.16.20</lombok.version>
     </properties>
 
     <!--系统模板-->
@@ -50,6 +50,7 @@
         <module>slife-activiti</module>
         <module>slife-blog</module>
         <module>slife-wx-applet</module>
+        <module>slife-sys-api</module>
 
     </modules>
 
@@ -312,7 +313,11 @@
                 <version>${sitemesh.version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

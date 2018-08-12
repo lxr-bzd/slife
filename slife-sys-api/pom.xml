@@ -9,26 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>slife-sys</artifactId>
+    <artifactId>slife-sys-api</artifactId>
 
-    <name>slife-sys</name>
     <dependencies>
-        <!-- common -->
         <dependency>
             <groupId>com.slife</groupId>
             <artifactId>slife-common</artifactId>
         </dependency>
-        <!-- assertj -->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-        </dependency>
-        <!-- sys api -->
-        <dependency>
-            <groupId>com.slife</groupId>
-            <artifactId>slife-sys-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
-
 </project>

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.slife.constant.Global;
 import com.slife.enums.DataScopeEnum;
-import com.slife.vo.SysMenuVO;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;

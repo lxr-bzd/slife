@@ -9,7 +9,6 @@ import com.slife.service.ISysMenuService;
 import com.slife.shiro.SlifeSysUser;
 import com.slife.util.ReturnDTOUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +54,7 @@ public class SysMenuController extends BaseController{
     /**
      * 进入系统菜单管理首页
      */
-    @RequiresPermissions("sys:menu:list")
+//    @RequiresPermissions("sys:menu:list")
     @GetMapping(value = "")
     public String list(Model model) {
 

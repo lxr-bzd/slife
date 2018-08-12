@@ -115,12 +115,12 @@
     }
 
     function dt_doploy_button(row) {
-        var editO = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="部署" onclick="remove(\''
-                + row.id + '\')"><i class="fa fa-edit"></i></a> ';
+        var editO = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="部署" onclick="deploy(\''
+                + row.id + '\')"><i class="fa fa-cog"></i></a> ';
         return editO;
     }
 
-    function remove(id) {
+    function deploy(id) {
         layer.confirm('确定要部署选中的记录？', {
             btn: ['确定', '取消']
         }, function () {

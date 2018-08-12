@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.slife.base.entity.DataEntity;
 import com.slife.constant.Global;
-import org.hibernate.validator.constraints.Length;
 
 /**
  * Created by chen on 2017/7/31.

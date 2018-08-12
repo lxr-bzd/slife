@@ -2,7 +2,6 @@ package com.slife.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.slife.base.entity.DataEntity;
 import org.hibernate.validator.constraints.Length;
 
