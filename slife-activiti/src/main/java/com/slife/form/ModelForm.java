@@ -1,4 +1,4 @@
-package com.slife.vo;
+package com.slife.form;
 
 import org.hibernate.validator.constraints.NotBlank;
 

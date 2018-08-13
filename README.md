@@ -237,8 +237,19 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 
 ![](https://github.com/javanan/slife/blob/master/dec/8.jpg?raw=true)
 
-
-
+## 部署
+### 导入数据库
+在项目的db下有数据库脚本，首先导入数据
+### 启动redis服务
+需本地安装redis或者其他远程redis
+### 修改相关配置
+修改web下application-dev.yml中的配置：
+1. 数据库相关配置
+2. redis相关配置
+### 启动项目
+启动web工程下的WebApplication
+### 模块引用
+采用模块化开发，所有的模块除`slife-sys`、`slife-sys-api`基础模块以外，没有必然联系，想使用哪个可以在`slife-web`模块中引入即可
 
 
 
