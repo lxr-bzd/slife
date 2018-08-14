@@ -1,7 +1,7 @@
 package com.slife.service;
 
 import com.slife.base.vo.DataTable;
-import com.slife.utils.ActivitiUtils;
+import com.slife.utils.ExtUtils;
 import com.slife.dto.ProcessDefDTO;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -43,7 +43,7 @@ public class ProcessService {
                 .forEach(processDefinition -> {
 					Deployment deployment = repositoryService.createDeploymentQuery()
 							.deploymentId(processDefinition.getDeploymentId()).singleResult();
-					dt.getRows().add(ActivitiUtils.toProcessDefDTO(processDefinition, deployment));
+					dt.getRows().add(ExtUtils.toProcessDefDTO(processDefinition, deployment));
 		});
         dt.setRows((List<ProcessDefDTO>) dt.getRows()
                 .stream()

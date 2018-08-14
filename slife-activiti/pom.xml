@@ -58,6 +58,12 @@
             <artifactId>activiti-diagram-rest</artifactId>
             <version>${activiti.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.slife</groupId>
+            <artifactId>slife-sys-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

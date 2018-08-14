@@ -1,55 +1,45 @@
 package com.slife.utils;
 
+import com.slife.entity.SysRole;
+import com.slife.entity.SysUser;
 import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import com.slife.dto.ProcessDefDTO;
+import com.slife.service.ISysUserService;
+import com.slife.util.ApplicationContextRegister;
+import com.slife.util.StringUtils;
+import org.activiti.engine.impl.persistence.entity.GroupEntity;
+import org.activiti.engine.impl.persistence.entity.UserEntity;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 /**
  * @author: xufei.
  * @createTime: 2017/8/11.
  */
-public class ActivitiUtils {
-
-//    static UserDetailDao userDetailDao = Application.getBean(UserDetailDao.class);
-//
-//    static UserServiceClient userServiceClient = Application.getBean(UserServiceClient.class);
-//
+public class ExtUtils {
 //    static HistoryService historyService = Application.getBean(HistoryService.class);
+    private static ISysUserService userService = ApplicationContextRegister.getBean(ISysUserService.class);
 
     /**
      * 获取用户信息
      * @param userId
      * @return
      */
-//    public static UserInfo getUserInfo(String userId) {
-//        if (userDetailDao.has(userId)) {
-//            return parseUserInfo(userDetailDao.get(userId));
-//        }
-//        RespDTO resp = userServiceClient.getUser(userId);
-//        return Optional.ofNullable(resp.data)
-//                .map(data -> {
-//                    userDetailDao.set(JSON.toJSONString(data), userId);
-//                    return parseUserInfo(JSON.toJSONString(data));
-//                })
-//                .orElseThrow(() ->new TaiChiException(ErrorCode.FAIL, "get user from user service error"));
-//    }
+    public static SysUser getUserInfo(String userId) {
+        return userService.getById(userId);
+    }
 
-//    private static UserInfo parseUserInfo(String json) {
-//        return JSON.parseObject(json, UserInfo.class);
-//    }
-
-//    /**
-//     * 删除缓存
-//     * @param userId
-//     */
-//    public static void delUserCache(String userId) {
-//        if (userDetailDao.has(userId)) {
-//            userDetailDao.del(userId);
-//        }
-//    }
+    /**
+     * 获取用户角色
+     * @param userId
+     * @return
+     */
+    public static List<SysRole> getUserRoles(String userId) {
+        return userService.selectUserAllInfoById(Long.parseLong(userId)).getSysRoles();
+    }
 
     /**
      * 节点对应的中文名称
@@ -57,7 +47,7 @@ public class ActivitiUtils {
      * @return
      */
     public static String parseToZhType(String type) {
-        Map<String, String> types = new HashMap<String, String>();
+        Map<String, String> types = new HashMap<>(16);
         types.put("userTask", "用户任务");
         types.put("serviceTask", "系统任务");
         types.put("startEvent", "开始节点");
@@ -69,34 +59,34 @@ public class ActivitiUtils {
     }
 
     /**
-     * 将dto转为activiti的entity
+     * 将SysRole转为activiti的entity
      * @param role
      * @return
      */
-//    public static GroupEntity toActivitiGroup(SysRoleDTO role){
-//        GroupEntity groupEntity = new GroupEntity();
-//        groupEntity.setId(role.getRoleId());
-//        groupEntity.setName(role.getName());
-//        groupEntity.setType(role.getType() + "");
-//        groupEntity.setRevision(1);
-//        return groupEntity;
-//    }
+    public static GroupEntity toActivitiGroup(SysRole role){
+        GroupEntity groupEntity = new GroupEntity();
+        groupEntity.setId(role.getId() + "");
+        groupEntity.setName(role.getName());
+        groupEntity.setType(role.getDataScope());
+        groupEntity.setRevision(1);
+        return groupEntity;
+    }
 
     /**
-     * 将dto转为activiti的entity
+     * 将SysUser转为activiti的entity
      * @param user
      * @return
      */
-//    public static UserEntity toActivitiUser(SysUserDTO user){
-//        UserEntity userEntity = new UserEntity();
-//        userEntity.setId(user.getUserId());
-//        userEntity.setFirstName(user.getRealname());
-//        userEntity.setLastName(StringUtils.EMPTY);
-//        userEntity.setPassword(user.getPassword());
-//        userEntity.setEmail(user.getEmail());
-//        userEntity.setRevision(1);
-//        return userEntity;
-//    }
+    public static UserEntity toActivitiUser(SysUser user){
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(user.getId() + "");
+        userEntity.setFirstName(user.getName());
+        userEntity.setLastName(StringUtils.EMPTY);
+        userEntity.setPassword(user.getPassword());
+        userEntity.setEmail(user.getEmail());
+        userEntity.setRevision(1);
+        return userEntity;
+    }
 
     /**
      * 抽取流程定义需要返回的内容
