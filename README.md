@@ -4,8 +4,8 @@ qq群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=3d00028ad6bec03e9
 <br>
 ## qq群 421351927
 
-# **[小福利 点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/act/ambassador/sharetouser.html?userCode=vf2b5zld&utm_source=vf2b5zld)**
-
+# **[小福利 点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld)**
+https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld
 
 ## 感谢码云的支持
 ![](https://github.com/javanan/slife/blob/master/dec/222.jpg?raw=true)
@@ -247,7 +247,6 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 启动web工程下的WebApplication
 ### 模块引用
 采用模块化开发，所有的模块除`slife-sys`、`slife-sys-api`基础模块以外，没有必然联系，想使用哪个可以在`slife-web`模块中引入即可
-
 
 
 
