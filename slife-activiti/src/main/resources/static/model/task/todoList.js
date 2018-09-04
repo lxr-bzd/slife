@@ -8,16 +8,16 @@ function getcolumns() {
             title: '流程分类'
         },
         {
-            field: 'key',
-            title: '模型标识'
+            field: 'applicant',
+            title: '申请人'
         },
         {
-            field: 'name',
-            title: '流程名称'
+            field: 'taskName',
+            title: '任务名称'
         },
         {
-            field: 'revision',
-            title: '版本号'
+            field: 'title',
+            title: '流程主题'
         },
         {
             field: 'xmlName',

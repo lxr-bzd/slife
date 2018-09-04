@@ -1,5 +1,6 @@
 package com.slife.utils;
 
+import com.slife.dto.TaskDTO;
 import com.slife.entity.SysRole;
 import com.slife.entity.SysUser;
 import com.slife.enums.HttpCodeEnum;
@@ -12,6 +13,8 @@ import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.task.TaskInfo;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,21 +116,22 @@ public class ExtUtils {
         return dto;
     }
 
-//    public static TaskDTO toTaskDTO(TaskInfo task, String status, ProcessDefinition processDefinition, Deployment deployment) {
-//        TaskDTO dto = new TaskDTO();
-//        dto.setTaskId(task.getId());
-//        dto.setTaskName(task.getName());
-////        dto.setTime(historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult().getStartTime().getTime());
-//        dto.setVariable(task.getTaskLocalVariables());
-//        dto.setPdName(deployment.getName());
-//        dto.setVersion("V:" + processDefinition.getVersion());
-//        dto.setProcessInstanceId(task.getProcessInstanceId());
-//        dto.setStatus(status);
-//        dto.setTitle((String) task.getProcessVariables().get("title"));
-//        dto.setNodeKey(task.getTaskDefinitionKey());
-//        dto.setProcessDefKey(processDefinition.getKey());
-//        return dto;
-//    }
+    public static TaskDTO toTaskDTO(TaskInfo task, String status, ProcessDefinition processDefinition, Deployment deployment) {
+        TaskDTO dto = new TaskDTO();
+        dto.setTaskId(task.getId());
+        dto.setTaskName(task.getName());
+//        dto.setTime(historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult().getStartTime().getTime());
+        dto.setVariable(task.getTaskLocalVariables());
+        dto.setPdName(deployment.getName());
+        dto.setVersion("V:" + processDefinition.getVersion());
+        dto.setProcessInstanceId(task.getProcessInstanceId());
+        dto.setStatus(status);
+        dto.setTitle((String) task.getProcessVariables().get("title"));
+        dto.setNodeKey(task.getTaskDefinitionKey());
+        dto.setProcessDefKey(processDefinition.getKey());
+        dto.setCategory(task.getCategory());
+        return dto;
+    }
 
 //    public static TaskListDTO toTaskListDTO(PageResultsDTO dto, String category) {
 //        TaskListDTO taskList = new TaskListDTO();

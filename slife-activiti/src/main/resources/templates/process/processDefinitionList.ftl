@@ -37,7 +37,6 @@
 <script src="${base}/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 <script src="${base}/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="${base}/js/slife/datatable.js"></script>
-<#--<script src="${base}/model/model.js"/>-->
 <script src="${base}/model/process/processDefinition.js"/>
 </body>
 </html>

@@ -126,10 +126,19 @@ function export_data(columns, sorts) {
  * @param columns
  */
 function load_data(columns, sorts) {
+    load_data_list(columns, sorts, 'list')
+}
+
+/**
+ * 加载表数据
+ * @param url
+ * @param columns
+ */
+function load_data_list(columns, sorts, uri) {
     $('#exampleTable').bootstrapTable(
         {
             method: 'post', // 服务器数据的请求方式 get or post
-            url: url + "list", // 服务器数据的加载地址
+            url: url + uri, // 服务器数据的加载地址
             //showRefresh : true,
             //showToggle : true,
             //showColumns : true,
