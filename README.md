@@ -1,6 +1,7 @@
 # 项目介绍
 
 Slife是一个使用`Spring Boot`搭建的企业级快速开发脚手架。
+## 阿里云优惠券 [点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld)
 
 ## 技术栈
 
@@ -246,6 +247,9 @@ Slife申请了`JetBrains`的全家桶授权，因为之前活跃人数只有两�
 ## 阿里云优惠券
 
 [点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld)
+
+
+[腾讯云](https://cloud.tencent.com/redirect.php?redirect=1005&cps_key=1cdaea7b77fe67188b187bce55796594&from=console)
 
 
 
