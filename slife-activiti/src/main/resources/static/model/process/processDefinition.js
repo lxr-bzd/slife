@@ -25,7 +25,7 @@ function getcolumns() {
             align: 'center',
             formatter: function (value, row, index) {
                 var procDefId = row.processonDefinitionId;
-                return '<a href=${url}resource?procDefId=' + procDefId + '&resType=xml>' + value + '</a>';
+                return '<a href=' + url + 'resource?procDefId=' + procDefId + '&resType=xml>' + value + '</a>';
             }
         },
         {
@@ -34,7 +34,7 @@ function getcolumns() {
             align: 'center',
             formatter: function (value, row, index) {
                 var procDefId = row.processonDefinitionId;
-                return '<a href=${url}resource?procDefId=' + procDefId + '&resType=image>' + value + '</a>';
+                return '<a href=' + url + 'resource?procDefId=' + procDefId + '&resType=image>' + value + '</a>';
             }
         },
         {
