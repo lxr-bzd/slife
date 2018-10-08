@@ -90,11 +90,21 @@
             },
             {
                 field: 'createTime',
-                title: '创建时间'
+                title: '创建时间',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    var date = row.createTime;
+                    return formatDate(new Date(date));
+                }
             },
             {
                 field: 'lastUpdateTime',
-                title: '最后更新时间'
+                title: '最后更新时间',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    var date = row.lastUpdateTime;
+                    return formatDate(new Date(date));
+                }
             },
             {
                 title: '操作',

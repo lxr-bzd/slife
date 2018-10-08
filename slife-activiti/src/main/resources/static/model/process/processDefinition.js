@@ -39,7 +39,12 @@ function getcolumns() {
         },
         {
             field: 'deploymentTime',
-            title: '部署时间'
+            title: '部署时间',
+            align: 'center',
+            formatter: function (value, row, index) {
+                var date = row.deploymentTime;
+                return formatDate(new Date(date));
+            }
         },
         {
             title: '操作',

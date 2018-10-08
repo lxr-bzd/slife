@@ -258,3 +258,18 @@ function dt_action(title, action) {
         content: url + action // iframe的url
     });
 }
+
+/**
+ * 格式化日期
+ * @param now
+ * @returns {string}
+ */
+function formatDate(now) {
+    var year = now.getFullYear();
+    var month = now.getMonth()+1;
+    var date = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds() > 10 ? now.getSeconds() : '0' + now.getSeconds();
+    return year + "-" + month + "-" + date+ " " + hour + ":" + minute + ":" + second;
+}
