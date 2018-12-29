@@ -1,11 +1,9 @@
 # 项目介绍
 
 Slife是一个使用`Spring Boot`搭建的企业级快速开发脚手架。
+    
 
-
-### [阿里云新用户2折券 点我获取阿里云优惠券](https://m.aliyun.com/act/team1212/?params=N.Q39QMvPtEp)         
-
-### [老用户优惠券地址 点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld)    
+### [阿里云代金券 1888元，点击即可获取](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld)    
 
 ### 建议注册个新账户购买，享受2折 
 
