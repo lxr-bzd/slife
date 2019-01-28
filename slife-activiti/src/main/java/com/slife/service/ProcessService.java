@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author: felix.
+ * @author: felixu
  * @createTime: 2017/12/11.
  */
 @Service
@@ -85,4 +85,9 @@ public class ProcessService {
     public void deleteProcIns(String procInsId, String deleteReason) {
         runtimeService.deleteProcessInstance(procInsId, deleteReason);
     }
+
+	@Transactional(rollbackFor = Exception.class)
+	public void deleteDeployment(String deploymentId) {
+		repositoryService.deleteDeployment(deploymentId, true);
+	}
 }

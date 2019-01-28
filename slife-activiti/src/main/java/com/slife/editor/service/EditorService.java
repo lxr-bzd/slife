@@ -21,8 +21,8 @@ import java.io.InputStream;
 import static org.activiti.editor.constants.ModelDataJsonConstants.*;
 
 /**
- * @author: felixu.
- * @createTime: 2017/11/26.
+ * @author: felixu
+ * @createTime: 2017/11/26
  */
 @Service
 public class EditorService {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 /**
- * @author: felixu.
+ * @author: felixu
  * @createTime: 2017/11/26.
  */
 @RestController

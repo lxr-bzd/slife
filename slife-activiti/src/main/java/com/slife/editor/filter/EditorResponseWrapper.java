@@ -7,7 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 
 /**
- * @author: felixu.
+ * @author: felixu
  * @createTime: 2017/11/26.
  */
 public class EditorResponseWrapper extends HttpServletResponseWrapper {

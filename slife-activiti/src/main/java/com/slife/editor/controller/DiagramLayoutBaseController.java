@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 /**
- * @author: felixu.
+ * @author: felixu
  * @createTime: 2017/11/26.
  */
 public class DiagramLayoutBaseController {

@@ -60,9 +60,9 @@ function getcolumns() {
 load_data_list(getcolumns(), {"revision": "desc"}, 'list')
 
 function dt_delete_button(row) {
+    var deploymentId = row.deploymentId;
     var deleteO = '<a class="btn btn-warning btn-sm" href="#" title="删除"  mce_href="#" ' +
-        'onclick="remove(\'' + row.id + '\')">删除</a> ';
-
+        'onclick="remove(\'' + deploymentId + '\')">删除</a> ';
     return deleteO;
 
 }

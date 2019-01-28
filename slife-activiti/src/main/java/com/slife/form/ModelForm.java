@@ -3,7 +3,7 @@ package com.slife.form;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * @author: felix.
+ * @author: felixu
  * @createTime: 2017/12/11.
  */
 public class ModelForm {

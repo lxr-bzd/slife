@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.*;
 
 /**
- * @author: felixu.
+ * @author: felixu
  * @createTime: 2017/11/26.
  */
 @Service

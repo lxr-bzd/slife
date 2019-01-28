@@ -3,7 +3,7 @@ package com.slife.dto;
 import lombok.Data;
 
 /**
- * @author: felix.
+ * @author: felixu
  * @createTime: 2017/12/11.
  */
 @Data

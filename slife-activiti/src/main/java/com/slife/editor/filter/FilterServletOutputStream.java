@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author: felixu.
+ * @author: felixu
  * @createTime: 2017/11/26.
  */
 public class FilterServletOutputStream extends ServletOutputStream {

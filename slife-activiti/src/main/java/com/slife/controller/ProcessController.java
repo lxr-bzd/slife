@@ -11,14 +11,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.util.List;
 
 /**
- * @author: felix.
+ * @author: felixu
  * @createTime: 2017/12/11.
  */
 @Controller
@@ -75,11 +77,14 @@ public class ProcessController {
         return ReturnDTOUtil.success();
     }
 
-    @ApiOperation(value = "根据实例id删除流程实例", notes = "根据实例id删除流程实例")
+    @ApiOperation(value = "批量删除已部署流程", notes = "批量删除已部署流程")
     @PostMapping("/delete")
-    public ReturnDTO deleteProcIns(@RequestParam String procInsId) {
-//        processService.deleteProcIns(procInsId, reason);
-//        return RespDTO.onSuc(procInsId);
+    @ResponseBody
+    public ReturnDTO deleteProcIns(@RequestParam("ids") List<String> ids) {
+	    if (CollectionUtils.isEmpty(ids)) {
+	        return ReturnDTOUtil.custom(HttpCodeEnum.INVALID_REQUEST);
+        }
+	    ids.forEach(id -> processService.deleteDeployment(id));
         return ReturnDTOUtil.success();
     }
 }
