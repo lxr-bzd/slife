@@ -25,11 +25,11 @@
     <dependencies>
 
 
-        <dependency>
-            <groupId>com.github.drtrang</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.0.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.drtrang</groupId>-->
+            <!--<artifactId>druid-spring-boot-starter</artifactId>-->
+            <!--<version>1.0.2</version>-->
+        <!--</dependency>-->
 
 
         <dependency>
@@ -38,15 +38,15 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.slife</groupId>
-            <artifactId>slife-code</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.slife</groupId>-->
+            <!--<artifactId>slife-code</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>com.slife</groupId>
-            <artifactId>slife-drools</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.slife</groupId>-->
+            <!--<artifactId>slife-drools</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.slife</groupId>
@@ -64,10 +64,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.slife</groupId>
-            <artifactId>slife-activiti</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.slife</groupId>-->
+            <!--<artifactId>slife-activiti</artifactId>-->
+        <!--</dependency>-->
 
     </dependencies>
 
@@ -79,6 +79,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

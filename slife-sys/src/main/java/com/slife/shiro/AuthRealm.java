@@ -8,6 +8,7 @@ import com.slife.service.ISysRoleService;
 import com.slife.service.ISysUserService;
 import com.slife.util.ApplicationContextRegister;
 import com.slife.util.Encodes;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -15,28 +16,14 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 
 /**
- * Created by chen on 2017/7/14.
- * <p>
- * Email 122741482@qq.com
- * <p>
- * Describe:
+ * @author felixu
+ * @date 2019.03.14
  */
-
-@Component(value = "authRealm")
+@Slf4j
 public class AuthRealm extends AuthorizingRealm {
-
-
-
-    private  Logger logger= LoggerFactory.getLogger(getClass());
-
-
 
     /**
      * 设定密码校验的Hash算法与迭代次数
@@ -46,7 +33,7 @@ public class AuthRealm extends AuthorizingRealm {
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(Setting.HASH_ALGORITHM);
         matcher.setHashIterations(Setting.HASH_INTERATIONS);
         setCredentialsMatcher(matcher);
-        logger.info("---------密码校验器  -matcher----------------");
+        log.info("---------密码校验器  -matcher----------------");
     }
 
     /**
@@ -58,7 +45,7 @@ public class AuthRealm extends AuthorizingRealm {
         ISysUserService sysUserService = ApplicationContextRegister.getBean(ISysUserService.class);
         SysUser sysUser = sysUserService.getByLoginName(loginName);
         if (sysUser != null) {
-            logger.info(sysUser.getName()+"登录");
+            log.info(sysUser.getName() + "登录");
             if (Global.NO.equals(sysUser.getLoginFlag())) {
                 throw new DisabledAccountException();
             }
@@ -67,7 +54,7 @@ public class AuthRealm extends AuthorizingRealm {
                     sysUser.getPassword().substring(16), ByteSource.Util.bytes(salt),
                     getName());
         } else {
-            logger.info(sysUser.getName()+"登录失败");
+            log.info(sysUser.getName()+"登录失败");
             throw new UnknownAccountException();
         }
     }
@@ -77,7 +64,7 @@ public class AuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        logger.info("登录授权");
+        log.info("登录授权");
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 

@@ -37,44 +37,44 @@ public class CacheConfig {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Bean(name = "slifeRedisCacheManager")
-    @Primary
-    public SlifeRedisCacheManager slifeRedisCacheManager() {
-        logger.info("--------------redis cache init---------------");
-        SlifeRedisCacheManager slifeRedisCacheManager = new SlifeRedisCacheManager();
-        slifeRedisCacheManager.setRedisTemplate(redisTemplate);
-        logger.info("--------------redis cache ---------------" + slifeRedisCacheManager);
-        return slifeRedisCacheManager;
-    }
+//    @Bean(name = "slifeRedisCacheManager")
+//    @Primary
+//    public SlifeRedisCacheManager slifeRedisCacheManager() {
+//        logger.info("--------------redis cache init---------------");
+//        SlifeRedisCacheManager slifeRedisCacheManager = new SlifeRedisCacheManager();
+//        slifeRedisCacheManager.setRedisTemplate(redisTemplate);
+//        logger.info("--------------redis cache ---------------" + slifeRedisCacheManager);
+//        return slifeRedisCacheManager;
+//    }
 
 
-    @Bean(name = "redisCacheManager")
-    @Primary
-    public RedisCacheManager redisCacheManager() {
-        logger.info("--------------redis cache init---------------");
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
-        logger.info("--------------redis cache ---------------" + redisCacheManager);
-        return redisCacheManager;
-    }
+//    @Bean(name = "redisCacheManager")
+//    @Primary
+//    public RedisCacheManager redisCacheManager() {
+//        logger.info("--------------redis cache init---------------");
+//        RedisCacheManager redisCacheManager = new RedisCacheManager();
+//        redisCacheManager.setRedisManager(redisManager());
+//        logger.info("--------------redis cache ---------------" + redisCacheManager);
+//        return redisCacheManager;
+//    }
 
 
     @Value("${spring.redis.host}")
     private String host;
-    @Value("${spring.redis.password}")
-    private String password;
+//    @Value("${spring.redis.password}")
+//    private String password;
     @Value("${spring.redis.port}")
     private int port;
     @Value("${spring.redis.database}")
     private int database;
 
-    public RedisManager redisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(host);
-        redisManager.setPassword(password);
-        redisManager.setPort(port);
-        redisManager.setDatabase(database);
-        return redisManager;
-    }
+//    public RedisManager redisManager() {
+//        RedisManager redisManager = new RedisManager();
+//        redisManager.setHost(host);
+////        redisManager.setPassword(password);
+//        redisManager.setPort(port);
+//        redisManager.setDatabase(database);
+//        return redisManager;
+//    }
 
 }

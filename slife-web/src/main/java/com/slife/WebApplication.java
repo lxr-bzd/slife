@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.slife")
 @EnableTransactionManagement
 @MapperScan("com.slife.dao")//@Mapper  在mapper 接口上加入也行
 public class WebApplication {

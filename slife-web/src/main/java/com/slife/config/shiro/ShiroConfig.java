@@ -11,6 +11,8 @@ package com.slife.config.shiro;
 import com.slife.shiro.AuthRealm;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.mgt.SessionsSecurityManager;
+import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -19,10 +21,13 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.slf4j.Logger;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 
 /**
@@ -34,11 +39,35 @@ import java.util.LinkedHashMap;
 @Configuration
 public class ShiroConfig {
 
+    private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 
-   private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
+//    @Bean
+//    public FilterRegistrationBean delegatingFilterProxy(){
+//        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+//        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+//        proxy.setTargetFilterLifecycle(true);
+//        proxy.setTargetBeanName("shiroFilter");
+//        filterRegistrationBean.setFilter(proxy);
+//        return filterRegistrationBean;
+//    }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+    public FilterRegistrationBean<DelegatingFilterProxy> delegatingFilterProxy(){
+        FilterRegistrationBean<DelegatingFilterProxy> filterRegistrationBean = new FilterRegistrationBean<>();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilter");
+        filterRegistrationBean.setFilter(proxy);
+        filterRegistrationBean.setEnabled(true);
+        filterRegistrationBean.addUrlPatterns("/*");
+        //filterRegistrationBean.setAsyncSupported(true);
+        EnumSet<DispatcherType> types = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
+        filterRegistrationBean.setDispatcherTypes(types);
+        return filterRegistrationBean;
+    }
+
+   @Bean
+   public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         //SecurityManager manager= securityManager(authRealm);
         ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
         bean.setSecurityManager(securityManager);
@@ -83,13 +112,32 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/*.*", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
+   }
+
+    // TODO: 2019-03-14 可配置的cache
+//    /**
+//     * 创建自定义的AuthorizingRealm
+//     * 关于缓存可以选择使用Ehcache或者Redis
+//     * {@link org.apache.shiro.cache.ehcache.EhCacheManager}
+//     * {@link RedisCacheManager}
+//     * {@link CacheConfig}
+//     *
+//     * @param cacheManager 这里注入接口，在yaml文件中配置具体使用Ehcache还是Redis. {@link CacheConfig}
+//     * @return AuthorizingRealm
+//     */
+    @Bean
+    public AuthorizingRealm authorizingRealm(CacheManager cacheManager) {
+        AuthRealm realm = new AuthRealm();
+        realm.setCacheManager(cacheManager);
+        return realm;
     }
 
 
     //配置核心安全事务管理器
     @Bean
-    public SecurityManager securityManager(@Qualifier("authRealm")AuthRealm authRealm,@Qualifier("redisCacheManager")CacheManager
-            cacheManager) {
+//    public SecurityManager securityManager(@Qualifier("authRealm")AuthRealm authRealm,@Qualifier("redisCacheManager")CacheManager
+//            cacheManager) {
+    public SessionsSecurityManager securityManager(AuthorizingRealm authRealm) {
 
        logger.info("--------------shiro已经加载----------------");
         DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
@@ -98,7 +146,7 @@ public class ShiroConfig {
 
         //注入缓存管理器;
         //注意:开发时请先关闭，如不关闭热启动会报错
-        manager.setCacheManager(cacheManager);//这个如果执行多次，也是同样的一个对象;
+//        manager.setCacheManager(cacheManager);//这个如果执行多次，也是同样的一个对象;
         //注入记住我管理器;
         manager.setRememberMeManager(rememberMeManager());
 
