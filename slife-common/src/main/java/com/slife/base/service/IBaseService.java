@@ -1,6 +1,5 @@
 package com.slife.base.service;
-
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.slife.base.vo.DataTable;
 
 /**
@@ -12,7 +11,7 @@ import com.slife.base.vo.DataTable;
  * <p>
  * Describe:
  */
-public interface IBaseService<T> extends IService<T>{
+public interface IBaseService<T> extends IService<T> {
 
     /**
      * DateTable 分页查询

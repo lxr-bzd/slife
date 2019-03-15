@@ -1,6 +1,6 @@
 package com.slife.base.dao;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * Created by chen on 2017/4/10.

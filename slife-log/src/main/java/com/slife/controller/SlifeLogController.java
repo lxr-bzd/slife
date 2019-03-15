@@ -49,7 +49,7 @@ public class SlifeLogController extends BaseController {
     @PostMapping(value = "/delete")
     @ResponseBody
     public ReturnDTO delete(@RequestParam("ids") List<Long> ids, ServletRequest request) {
-        boolean success = slifeLogService.deleteBatchIds(ids);
+        boolean success = slifeLogService.removeByIds(ids);
         if (success) {
             return ReturnDTOUtil.success();
         }

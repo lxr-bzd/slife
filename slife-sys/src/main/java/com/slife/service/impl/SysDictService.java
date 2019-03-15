@@ -1,8 +1,5 @@
 package com.slife.service.impl;
 
-import com.baomidou.mybatisplus.enums.SqlLike;
-import com.baomidou.mybatisplus.mapper.Condition;
-
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.base.vo.PCAjaxVO;
@@ -10,12 +7,15 @@ import com.slife.constant.Global;
 import com.slife.dao.SysDictDao;
 import com.slife.entity.SysDict;
 import com.slife.service.ISysDictService;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -26,6 +26,7 @@ import java.util.List;
  * <p>
  * Describe:
  */
+@Slf4j
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class SysDictService extends BaseService<SysDictDao, SysDict> implements ISysDictService {
@@ -46,16 +47,17 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
     @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public boolean update(Long id, String dicKey, String dicValue, String type, String desc, String sort, String invalid) {
-        SysDict sysDict = selectById(id);
+
+        SysDict sysDict = getById(id);
         if (null == sysDict) {
             return false;
         }
         sysDict.setJkey(dicKey);
         sysDict.setJvalue(dicValue);
-        if (!Strings.isNullOrEmpty(sort)) {
+        if (StringUtils.hasLength(sort)) {
             sysDict.setSort(Integer.parseInt(sort));
         }
-        if (!Strings.isNullOrEmpty(type)) {
+        if (StringUtils.hasLength(type)) {
             sysDict.setType(type);
         }
         sysDict.setRemark(desc);
@@ -66,23 +68,19 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
 
     @Override
     public List<JsTree> getDictTree() {
-        logger.info("查找字段树");
-        List<SysDict> sysDicts = this.baseMapper.selectList(Condition.create().orderBy("sort", true));
-        List<JsTree> jts = Lists.newArrayList();
-        for (SysDict sysDict : sysDicts) {
+        log.info("[SysDictService#getDictTree] ---> select tree");
+        return list(lambdaQuery().orderByAsc(SysDict::getSort)).stream().map(dict -> {
             JsTree jt = new JsTree();
-            jt.setId(sysDict.getId().toString());
-            jt.setParent(sysDict.getParentId().compareTo(0L) > 0 ? sysDict.getParentId().toString() : "#");
-            jt.setText(sysDict.getJvalue());
-            if ("C".equals(sysDict.getType())) {
+            jt.setId(dict.getId().toString());
+            jt.setParent(dict.getParentId().compareTo(0L) > 0 ? dict.getParentId().toString() : "#");
+            jt.setText(dict.getJvalue());
+            if ("C".equals(dict.getType())) {
                 jt.setIcon("fa fa-home");
             } else {
                 jt.setIcon("glyphicon glyphicon-tint");
             }
-            jts.add(jt);
-        }
-        return jts;
-
+            return jt;
+        }).collect(Collectors.toList());
     }
 
     /**
@@ -94,9 +92,9 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
      * @param sort
      */
     @Override
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
-    public void insert(String dicKey, String dicValue, Long dicPid, String type, String desc, String
-            sort, String invalid, String path) {
+    @Transactional(rollbackFor = Exception.class)
+    public void insert(String dicKey, String dicValue, Long dicPid, String type, String desc,
+                       String sort, String invalid, String path) {
         SysDict sysDict = new SysDict();
 
         if (null != dicPid) {
@@ -106,25 +104,22 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
         }
         sysDict.setJkey(dicKey);
         sysDict.setJvalue(dicValue);
-        if (!Strings.isNullOrEmpty(sort)) {
+        if (StringUtils.hasLength(sort)) {
             sysDict.setSort(Integer.parseInt(sort));
         }
-        if (!Strings.isNullOrEmpty(type)) {
+        if (StringUtils.hasLength(type)) {
             sysDict.setType(type);
         }
         sysDict.setRemark(desc);
         sysDict.setInvalid(invalid);
-        insert(sysDict);
+        save(sysDict);
 
         if (Global.TOP_TREE_NODE.equals(sysDict.getParentId())) {
             sysDict.setPath(sysDict.getId() + ".");
         } else {
-
             sysDict.setPath(path + sysDict.getId() + ".");
         }
-
         updateById(sysDict);
-
     }
 
 
@@ -135,16 +130,15 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
      * @return
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional
     public PCAjaxVO delete(Long id) {
         PCAjaxVO status = new PCAjaxVO(true);
         //是否为类，以及类下是否有引用
-        SysDict sysDict = selectById(id);
+        SysDict sysDict = getById(id);
 
         if (sysDict != null) {
             //删除
-            delete(Condition.create().like("path", sysDict.getPath(), SqlLike.RIGHT));
-
+            remove(lambdaQuery().likeRight(SysDict::getPath, sysDict.getPath()));
         } else {
             status.setSuccess(false);
             status.setMessage("该数据不存在");

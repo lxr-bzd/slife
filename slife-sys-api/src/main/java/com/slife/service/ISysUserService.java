@@ -50,7 +50,7 @@ public interface ISysUserService  extends IBaseService<SysUser> {
      * @param dt
      * @return
      */
-     DataTable<SysUser> PageSysUser(Map<String, Object> searchParams, DataTable<SysUser> dt) ;
+//     DataTable<SysUser> PageSysUser(Map<String, Object> searchParams, DataTable<SysUser> dt) ;
     /**
      * 检测登录名是否重复
      *

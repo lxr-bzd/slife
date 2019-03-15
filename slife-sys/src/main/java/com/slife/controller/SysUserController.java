@@ -58,7 +58,7 @@ public class SysUserController extends BaseController {
     public void exportCollectCustomerList(HttpServletResponse response) throws Exception {
 
 
-        List<SysUser> users = sysUserService.selectList(null);
+        List<SysUser> users = sysUserService.list();
 
         //导出数据
         String excelTitle = "用户列表";
@@ -95,7 +95,7 @@ public class SysUserController extends BaseController {
             return ReturnDTOUtil.custom(HttpCodeEnum.DELETE_DEFAULT_PHOTO_ERR);
         }
         Long userId = SlifeSysUser.id();
-        SysUser sysUser = sysUserService.selectById(userId);
+        SysUser sysUser = sysUserService.getById(userId);
         if (ObjectUtils.isEmpty(sysUser)) {
             return ReturnDTOUtil.notFound();
         }
@@ -202,7 +202,7 @@ public class SysUserController extends BaseController {
     @ResponseBody
     public ReturnDTO update(@Valid SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[] roleIds) {
 
-        SysUser sysUserDb = sysUserService.selectById(sysUser.getId());
+        SysUser sysUserDb = sysUserService.getById(sysUser.getId());
         if (ObjectUtils.isEmpty(sysUserDb)) {
             throw new SlifeException(HttpCodeEnum.NOT_FOUND);
         }
@@ -247,7 +247,7 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/delete")
     @ResponseBody
     public ReturnDTO delete(@RequestParam("ids") List<Long> ids, ServletRequest request) {
-        boolean success = sysUserService.deleteBatchIds(ids);
+        boolean success = sysUserService.removeByIds(ids);
         if (success) {
             return ReturnDTOUtil.success();
         }

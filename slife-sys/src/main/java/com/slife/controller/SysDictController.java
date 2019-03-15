@@ -79,7 +79,7 @@ public class SysDictController extends BaseController {
     @ResponseBody
     public Map selectById(@PathVariable Long id) {
         Map map = new HashMap();
-        map.put("dict", sysDictService.selectById(id));
+        map.put("dict", sysDictService.getById(id));
         return map;
     }
 

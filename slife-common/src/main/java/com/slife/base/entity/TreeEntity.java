@@ -1,8 +1,9 @@
 package com.slife.base.entity;
 
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.hibernate.validator.constraints.Length;
 
 /**

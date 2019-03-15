@@ -103,7 +103,7 @@ public class SysOfficeController extends BaseController {
     @ResponseBody
     public Map selectById(@PathVariable Long id) {
         Map map = new HashMap();
-        map.put("office", sysOfficeService.selectById(id));
+        map.put("office", sysOfficeService.getById(id));
         return map;
     }
 

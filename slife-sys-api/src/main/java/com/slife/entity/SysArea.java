@@ -1,7 +1,7 @@
 package com.slife.entity;
 
 
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.slife.base.entity.BaseEntity;
 
 import java.io.Serializable;

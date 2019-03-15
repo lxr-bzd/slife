@@ -35,7 +35,7 @@ public class SiteMeshController extends BaseController{
     public String getIndex(Model model, HttpServletRequest request) {
 
         model.addAttribute("slife", SlifeSysUser.ShiroUser());
-        model.addAttribute("menus", sysMenuService.CaseMenu(SlifeSysUser.id()));
+        model.addAttribute("menus", sysMenuService.caseMenu(SlifeSysUser.id()));
 
         return "layouts/default";
     }

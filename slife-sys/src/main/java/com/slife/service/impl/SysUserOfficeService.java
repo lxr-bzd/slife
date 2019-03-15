@@ -1,7 +1,5 @@
 package com.slife.service.impl;
 
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.dao.SysUserOfficeDao;
@@ -12,6 +10,7 @@ import com.slife.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,24 +43,19 @@ public class SysUserOfficeService extends BaseService<SysUserOfficeDao, SysUserO
      */
     @Override
     public DataTable<SysUser> userList(DataTable dt) {
-
         List<SysUser> sysUsers = new ArrayList<>();
-        DataTable<SysUser> sysUserDataTable=new DataTable<SysUser>();
-        DataTable<SysUserOffice> sysOfficeDataTable = sysUserOfficeService.pageSearch(dt);
-
-        if (CollectionUtils.isNotEmpty(sysOfficeDataTable.getRows())) {
-            List<Long> userIds = sysOfficeDataTable.getRows().stream().parallel().map(sysUserOffice -> sysUserOffice
-                    .getSysUserId())
+        DataTable<SysUser> sysUserDataTable= new DataTable<>();
+        DataTable<SysUserOffice> userOffices = sysUserOfficeService.pageSearch(dt);
+        if (!CollectionUtils.isEmpty(userOffices.getRows())) {
+            List<Long> userIds = userOffices.getRows().stream().parallel()
+                    .map(SysUserOffice::getSysUserId)
                     .collect(Collectors.toList());
-
-            sysUsers = sysUserService.selectList(Condition.create().in("id", userIds));
+            sysUsers = sysUserService.list(sysUserService.lambdaQuery().in(SysUser::getId, userIds));
         }
-
         sysUserDataTable.setRows(sysUsers);
-        sysUserDataTable.setTotal(sysOfficeDataTable.getTotal());
-        sysUserDataTable.setPageNumber(sysOfficeDataTable.getPageNumber());
-        sysUserDataTable.setPageSize(sysOfficeDataTable.getPageSize());
-
+        sysUserDataTable.setTotal(userOffices.getTotal());
+        sysUserDataTable.setPageNumber(userOffices.getPageNumber());
+        sysUserDataTable.setPageSize(userOffices.getPageSize());
         return sysUserDataTable;
     }
 
@@ -72,11 +66,10 @@ public class SysUserOfficeService extends BaseService<SysUserOfficeDao, SysUserO
      * @param officeId
      * @param userIds
      */
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void removeUsers(Long officeId, Long[] userIds) {
-
-        delete(Condition.create().eq("sys_user_id", officeId).in("sys_user_id", userIds));
+        remove(lambdaQuery().eq(SysUserOffice::getSysOfficeId, officeId).in(SysUserOffice::getSysUserId, userIds));
     }
 
     /**
@@ -86,7 +79,7 @@ public class SysUserOfficeService extends BaseService<SysUserOfficeDao, SysUserO
      * @param userIds
      * @param major
      */
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void addUsers(Long officeId, Long[] userIds, String major) {
         List<SysUserOffice> sysUserOffices = Arrays.stream(userIds).parallel().map(userId -> {
@@ -97,9 +90,6 @@ public class SysUserOfficeService extends BaseService<SysUserOfficeDao, SysUserO
                     return sys;
                 }
         ).collect(Collectors.toList());
-
-        insertBatch(sysUserOffices);
+        saveBatch(sysUserOffices);
     }
-
-
 }

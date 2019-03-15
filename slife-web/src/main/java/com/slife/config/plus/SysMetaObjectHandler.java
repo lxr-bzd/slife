@@ -1,6 +1,6 @@
 package com.slife.config.plus;
 
-import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.slife.shiro.SlifeSysUser;
 import org.apache.ibatis.reflection.MetaObject;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import java.util.Date;
  * @author chen
  */
 @Component
-public class SysMetaObjectHandler extends MetaObjectHandler {
+public class SysMetaObjectHandler implements MetaObjectHandler {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

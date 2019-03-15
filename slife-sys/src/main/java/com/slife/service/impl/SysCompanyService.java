@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>
  * Describe: 公司 service
  */
-@Service
-@Transactional(readOnly = true,rollbackFor = Exception.class)
-public class SysCompanyService extends BaseService<SysCompanyDao, SysCompany> implements ISysCompanyService {
-
-}
+//@Service
+//@Transactional(readOnly = true,rollbackFor = Exception.class)
+//public class SysCompanyService extends BaseService<SysCompanyDao, SysCompany> implements ISysCompanyService {
+//
+//}

@@ -1,54 +1,49 @@
 package com.slife.base.service.impl;
-
-import com.baomidou.mybatisplus.enums.SqlLike;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.enums.SqlLike;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.slife.base.entity.TreeEntity;
 import com.slife.base.service.IBaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.base.vo.JsTree;
 import com.slife.constant.SearchParam;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import static javafx.scene.input.KeyCode.F;
+import java.util.stream.Collectors;
 
 
 /**
  * @author chen
  */
-
 public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements IBaseService<T> {
-
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-
 
     /**
      * 排序菜单树
      * @param ts
      * @return
      */
-    protected <F extends TreeEntity>  List<JsTree>  makeTree( List<F> ts){
-        List<JsTree> res = new ArrayList();
-        ts.stream().forEach(t->{
+    protected <F extends TreeEntity>  List<JsTree>  makeTree(List<F> ts){
+        if (CollectionUtils.isEmpty(ts))
+            return Collections.emptyList();
+        return ts.stream().map(t->{
             JsTree jt = new JsTree();
             jt.setId(t.getId().toString());
             jt.setParent(t.getParentId() == null ? "#" : (t.getParentId().compareTo(0L) > 0 ? t
                     .getParentId().toString() : "#"));
             jt.setText(t.getName());
             jt.setIcon(t.getIcon());
-            res.add(jt);
-        });
-
-        return res;
+            return jt;
+        }).collect(Collectors.toList());
     }
 
     /**
@@ -66,30 +61,21 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
     /**
      * 加载 搜索条件
      *
-     * @param searchParams
-     * @param cnd
+     * @param params
+     * @param wrapper
      */
-    private void loadSearchParam(Map<String, Object> searchParams, Condition cnd) {
-
-        if (null != searchParams) {
-            searchParams.forEach((k, v) -> {
-                if (idLoadCnd(SearchParam.SEARCH_EQ, k, v)) {
-
-                    cnd.eq(k.split(SearchParam.SEARCH_EQ)[1], v);
-
-                } else if (idLoadCnd(SearchParam.SEARCH_LLIKE, k, v)) {
-
-                    cnd.like(k.split(SearchParam.SEARCH_LLIKE)[1], String.valueOf(v), SqlLike.LEFT);
-
-                } else if (idLoadCnd(SearchParam.SEARCH_RLIKE, k, v)) {
-
-                    cnd.like(k.split(SearchParam.SEARCH_RLIKE)[1], String.valueOf(v), SqlLike.RIGHT);
-
-                } else if (idLoadCnd(SearchParam.SEARCH_LIKE, k, v)) {
-
-                    cnd.like(k.split(SearchParam.SEARCH_LIKE)[1], String.valueOf(v));
+    private void loadSearchParam(Map<String, Object> params, LambdaQueryChainWrapper wrapper) {
+        if (!CollectionUtils.isEmpty(params)) {
+            params.forEach((searchKey, param) -> {
+                if (idLoadCnd(SearchParam.SEARCH_EQ, searchKey, param)) {
+                    wrapper.eq(searchKey.split(SearchParam.SEARCH_EQ)[1], param);
+                } else if (idLoadCnd(SearchParam.SEARCH_LLIKE, searchKey, param)) {
+                    wrapper.likeLeft(searchKey.split(SearchParam.SEARCH_LLIKE)[1], String.valueOf(param));
+                } else if (idLoadCnd(SearchParam.SEARCH_RLIKE, searchKey, param)) {
+                    wrapper.likeRight(searchKey.split(SearchParam.SEARCH_RLIKE)[1], String.valueOf(param));
+                } else if (idLoadCnd(SearchParam.SEARCH_LIKE, searchKey, param)) {
+                    wrapper.like(searchKey.split(SearchParam.SEARCH_LIKE)[1], String.valueOf(param));
                 }
-
             });
         }
     }
@@ -97,15 +83,15 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
     /**
      * 加载 排序条件
      */
-    private void loadSort(Map<String, String> sorts, Condition cnd) {
-
-        if (null != sorts && sorts.size()>0) {
-            StringBuffer stringBuffer = new StringBuffer();
-            sorts.forEach((k, v) -> {
-                stringBuffer.append(k);
-                stringBuffer.append("asc".equals(v.toLowerCase()) ? " ASC , " : " DESC ,");
+    private void loadSort(Map<String, String> sorts, LambdaQueryChainWrapper wrapper) {
+        if (!CollectionUtils.isEmpty(sorts)) {
+            sorts.forEach((column, sort) -> {
+                if ("asc".equalsIgnoreCase(sort)) {
+                    wrapper.orderByAsc(column);
+                } else {
+                    wrapper.orderByDesc(column);
+                }
             });
-            cnd.orderBy(stringBuffer.toString().trim().substring(0, stringBuffer.length() - 1));
         }
     }
 
@@ -117,18 +103,13 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
      */
     @Override
     public DataTable<T> pageSearch(DataTable<T> dt) {
-
-        Page<T> page = new Page<T>(dt.getPageNumber(), dt.getPageSize());
-        Condition cnd = new Condition();
-
-        loadSearchParam(dt.getSearchParams(), cnd);
-        loadSort(dt.getSorts(), cnd);
-
-        selectPage(page, cnd);
-        dt.setTotal(page.getTotal());
+        Page<T> page = new Page<>(dt.getPageNumber(), dt.getPageSize());
+        LambdaQueryChainWrapper<T> wrapper = lambdaQuery();
+        loadSearchParam(dt.getSearchParams(), wrapper);
+        loadSort(dt.getSorts(), wrapper);
+        page(page, wrapper);
+        dt.setTotal((int) page.getTotal());
         dt.setRows(page.getRecords());
         return dt;
     }
-
-
 }

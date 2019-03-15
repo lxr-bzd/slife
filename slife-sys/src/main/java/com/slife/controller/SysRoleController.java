@@ -109,7 +109,7 @@ public class SysRoleController extends BaseController {
     @GetMapping(value = "/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
         model.addAttribute("action", "detail");
-        SysRole sysRole = sysRoleService.selectById(id);
+        SysRole sysRole = sysRoleService.getById(id);
         model.addAttribute("role", sysRole);
         model.addAttribute("menuTree", JSON.toJSONString(sysRoleService.selectMenuTreeHasSelectDis(id,true)));
         model.addAttribute("url", request.getContextPath() + "/sys/role/");
@@ -127,7 +127,7 @@ public class SysRoleController extends BaseController {
     @GetMapping(value="update/{id}")
     public String updateForm(@PathVariable("id") Long id,Model model, HttpServletRequest request){
         model.addAttribute("action","update");
-        SysRole sysRole = sysRoleService.selectById(id);
+        SysRole sysRole = sysRoleService.getById(id);
         model.addAttribute("role",sysRole);
         model.addAttribute("url", request.getContextPath() + "/sys/role/");
         model.addAttribute("menuTree", JSON.toJSONString(sysRoleService.selectMenuTreeHasSelectDis(id,false)));

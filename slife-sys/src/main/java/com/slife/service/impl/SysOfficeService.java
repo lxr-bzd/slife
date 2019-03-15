@@ -1,6 +1,5 @@
 package com.slife.service.impl;
 
-import com.baomidou.mybatisplus.mapper.Condition;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.constant.Global;
@@ -31,8 +30,7 @@ public class SysOfficeService extends BaseService<SysOfficeDao, SysOffice> imple
      */
     @Override
     public List<JsTree> getOfficeTree() {
-        List<SysOffice> sysOffices = selectList(Condition.create().orderBy("sort", true));
-        return makeTree(sysOffices);
+        return makeTree(list(lambdaQuery().orderByAsc(SysOffice::getSort)));
 
     }
 
@@ -40,18 +38,16 @@ public class SysOfficeService extends BaseService<SysOfficeDao, SysOffice> imple
      * 保存 office
      * @param sysOffice
      */
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void add(SysOffice sysOffice) {
-
-        insert(sysOffice);
+        save(sysOffice);
         if (Global.TOP_TREE_NODE.equals(sysOffice.getParentId())) {
             sysOffice.setPath(sysOffice.getId() + ".");
         } else {
             sysOffice.setPath(sysOffice.getPath() + sysOffice.getId() + ".");
         }
         updateById(sysOffice);
-
     }
 
 
@@ -60,7 +56,7 @@ public class SysOfficeService extends BaseService<SysOfficeDao, SysOffice> imple
      *
      * @param sysOffice
      */
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(SysOffice sysOffice) {
         updateById(sysOffice);

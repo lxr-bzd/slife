@@ -3,8 +3,7 @@
  */
 package com.slife.base.entity;
 
-
-import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
@@ -15,7 +14,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
  * @param <T>
  */
 
-public abstract class BaseEntity<T extends Model> extends Model<T>  {
+public abstract class BaseEntity<T extends Model> extends Model<T> {
 
 
 

@@ -24,7 +24,7 @@ public interface ISysMenuService extends IBaseService<SysMenu> {
      */
      List<SysMenu> selectMenusByUserId(Long userId);
 
-     List<SysMenu> CaseMenu(Long userId);
+     List<SysMenu> caseMenu(Long userId);
 
     /**
      * 获取菜单树

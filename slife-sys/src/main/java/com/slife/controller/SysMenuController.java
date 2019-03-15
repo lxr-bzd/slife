@@ -47,7 +47,7 @@ public class SysMenuController extends BaseController{
     @ResponseBody
     public Map selectById(@PathVariable Long id) {
         Map map = new HashMap();
-        map.put("menu", sysMenuService.selectById(id));
+        map.put("menu", sysMenuService.getById(id));
         return map;
     }
 
@@ -70,7 +70,7 @@ public class SysMenuController extends BaseController{
     @ResponseBody
     public ReturnDTO selectUserSideMenu() {
 
-        return ReturnDTOUtil.success(sysMenuService.CaseMenu(SlifeSysUser.id()));
+        return ReturnDTOUtil.success(sysMenuService.caseMenu(SlifeSysUser.id()));
     }
 
     /**
