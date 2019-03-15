@@ -8,8 +8,6 @@ import com.slife.dao.SysDictDao;
 import com.slife.entity.SysDict;
 import com.slife.service.ISysDictService;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.util.Lists;
-import org.assertj.core.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -45,7 +43,7 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
      * @param invalid
      */
     @Override
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public boolean update(Long id, String dicKey, String dicValue, String type, String desc, String sort, String invalid) {
 
         SysDict sysDict = getById(id);

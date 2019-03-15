@@ -26,7 +26,6 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true,rollbackFor = Exception.class)
 //@CacheConfig(cacheNames = "cache:")
-/*public class SysUserService  extends BaseService<SysUserDao, SysUser>*/
 public class SysUserService extends BaseService<SysUserDao, SysUser> implements ISysUserService {
 
 

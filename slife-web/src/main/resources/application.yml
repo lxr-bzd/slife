@@ -22,7 +22,7 @@ spring:
     host: localhost
     port: 6379
     timeout: 6000ms
-    password: 123456
+#    password: 123456
     lettuce:
       pool:
         max-active: 1000
@@ -50,12 +50,10 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: com.slife.entity
   global-config:
-    id-type: 2
-    field-strategy: 2
-    auto-set-db-type: true
-    db-column-underline: true
-    refresh-mapper: true
-    metaObjectHandler: com.slife.config.plus.SysMetaObjectHandler
+    db-config:
+      id-type: id_worker
+      field-strategy: default
+      db-type: mysql
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
