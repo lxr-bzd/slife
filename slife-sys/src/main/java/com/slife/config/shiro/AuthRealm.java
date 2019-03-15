@@ -1,4 +1,4 @@
-package com.slife.shiro;
+package com.slife.config.shiro;
 
 import com.slife.constant.Global;
 import com.slife.constant.Setting;
@@ -6,6 +6,7 @@ import com.slife.entity.SysRole;
 import com.slife.entity.SysUser;
 import com.slife.service.ISysRoleService;
 import com.slife.service.ISysUserService;
+import com.slife.shiro.ShiroUser;
 import com.slife.util.ApplicationContextRegister;
 import com.slife.util.Encodes;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class AuthRealm extends AuthorizingRealm {
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(Setting.HASH_ALGORITHM);
         matcher.setHashIterations(Setting.HASH_INTERATIONS);
         setCredentialsMatcher(matcher);
-        log.info("---------密码校验器  -matcher----------------");
+        log.info("[AuthRealm#initCredentialsMatcher] ---> set credentials matcher");
     }
 
     /**
@@ -45,7 +46,7 @@ public class AuthRealm extends AuthorizingRealm {
         ISysUserService sysUserService = ApplicationContextRegister.getBean(ISysUserService.class);
         SysUser sysUser = sysUserService.getByLoginName(loginName);
         if (sysUser != null) {
-            log.info(sysUser.getName() + "登录");
+            log.info("[AuthRealm#doGetAuthenticationInfo] --> {} login", sysUser.getName());
             if (Global.NO.equals(sysUser.getLoginFlag())) {
                 throw new DisabledAccountException();
             }
@@ -54,7 +55,7 @@ public class AuthRealm extends AuthorizingRealm {
                     sysUser.getPassword().substring(16), ByteSource.Util.bytes(salt),
                     getName());
         } else {
-            log.info(sysUser.getName()+"登录失败");
+            log.error("[AuthRealm#doGetAuthenticationInfo] --> {} login error", sysUser.getName());
             throw new UnknownAccountException();
         }
     }
@@ -64,7 +65,7 @@ public class AuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        log.info("登录授权");
+        log.info("[AuthRealm#doGetAuthorizationInfo] --> authorization");
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 

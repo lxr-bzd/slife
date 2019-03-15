@@ -8,7 +8,7 @@ package com.slife.config.shiro;
  * Describe:
  */
 
-import com.slife.shiro.AuthRealm;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SessionsSecurityManager;
@@ -25,7 +25,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
-
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
@@ -35,21 +34,11 @@ import java.util.LinkedHashMap;
  * @author Administrator
  *
  */
-
+@Slf4j
 @Configuration
 public class ShiroConfig {
 
     private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
-
-//    @Bean
-//    public FilterRegistrationBean delegatingFilterProxy(){
-//        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-//        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-//        proxy.setTargetFilterLifecycle(true);
-//        proxy.setTargetBeanName("shiroFilter");
-//        filterRegistrationBean.setFilter(proxy);
-//        return filterRegistrationBean;
-//    }
 
     @Bean
     public FilterRegistrationBean<DelegatingFilterProxy> delegatingFilterProxy(){

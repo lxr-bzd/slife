@@ -59,6 +59,9 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+slife:
+  shiro:
+    cacheManager: ehcacheManager
 #security:
 #  basic:
 #    enabled: false
