@@ -6,6 +6,8 @@ import com.slife.entity.SysRole;
 import com.slife.entity.SysUser;
 import com.slife.service.ISysRoleService;
 import com.slife.service.ISysUserService;
+import com.slife.service.impl.SysRoleService;
+import com.slife.service.impl.SysUserService;
 import com.slife.shiro.ShiroUser;
 import com.slife.util.ApplicationContextRegister;
 import com.slife.util.Encodes;
@@ -43,7 +45,7 @@ public class AuthRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String loginName=((UsernamePasswordToken) token).getUsername();
-        ISysUserService sysUserService = ApplicationContextRegister.getBean(ISysUserService.class);
+        ISysUserService sysUserService = ApplicationContextRegister.getBean(SysUserService.class);
         SysUser sysUser = sysUserService.getByLoginName(loginName);
         if (sysUser != null) {
             log.info("[AuthRealm#doGetAuthenticationInfo] --> {} login", sysUser.getName());
@@ -69,7 +71,7 @@ public class AuthRealm extends AuthorizingRealm {
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-        ISysRoleService sysRoleService = ApplicationContextRegister.getBean(ISysRoleService.class);
+        ISysRoleService sysRoleService = ApplicationContextRegister.getBean(SysRoleService.class);
 
         for (SysRole sysRole : sysRoleService.selectRoleByUserId(shiroUser.id)) {
             // 基于Role的权限信息

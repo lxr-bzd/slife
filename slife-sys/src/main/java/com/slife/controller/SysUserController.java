@@ -126,7 +126,7 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/list")
     @ResponseBody
     public DataTable<SysUser> list(@RequestBody DataTable dt, ServletRequest request) {
-        return sysUserService.pageSearch(dt);
+        return sysUserService.pageSearch1(dt);
     }
 
 

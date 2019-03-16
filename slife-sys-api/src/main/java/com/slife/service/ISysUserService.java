@@ -3,6 +3,7 @@ package com.slife.service;
 import com.slife.base.service.IBaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.entity.SysUser;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Map;
 
@@ -76,4 +77,5 @@ public interface ISysUserService  extends IBaseService<SysUser> {
      */
      void updateSysUser(SysUser sysUser, Long[] ids) ;
 
+    DataTable<T> pageSearch1(DataTable<T> dt);
 }
