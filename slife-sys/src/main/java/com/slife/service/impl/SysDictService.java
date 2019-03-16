@@ -1,5 +1,6 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.base.vo.PCAjaxVO;
@@ -67,7 +68,7 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
     @Override
     public List<JsTree> getDictTree() {
         log.info("[SysDictService#getDictTree] ---> select tree");
-        return list(lambdaQuery().orderByAsc(SysDict::getSort)).stream().map(dict -> {
+        return list(Wrappers.lambdaQuery(new SysDict()).orderByAsc(SysDict::getSort)).stream().map(dict -> {
             JsTree jt = new JsTree();
             jt.setId(dict.getId().toString());
             jt.setParent(dict.getParentId().compareTo(0L) > 0 ? dict.getParentId().toString() : "#");
@@ -136,7 +137,7 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
 
         if (sysDict != null) {
             //删除
-            remove(lambdaQuery().likeRight(SysDict::getPath, sysDict.getPath()));
+            remove(Wrappers.lambdaQuery(new SysDict()).likeRight(SysDict::getPath, sysDict.getPath()));
         } else {
             status.setSuccess(false);
             status.setMessage("该数据不存在");

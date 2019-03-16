@@ -1,5 +1,6 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.constant.Global;
@@ -30,7 +31,7 @@ public class SysOfficeService extends BaseService<SysOfficeDao, SysOffice> imple
      */
     @Override
     public List<JsTree> getOfficeTree() {
-        return makeTree(list(lambdaQuery().orderByAsc(SysOffice::getSort)));
+        return makeTree(list(Wrappers.lambdaQuery(new SysOffice()).orderByAsc(SysOffice::getSort)));
 
     }
 

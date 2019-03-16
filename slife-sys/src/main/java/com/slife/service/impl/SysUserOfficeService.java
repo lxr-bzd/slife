@@ -1,5 +1,6 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.dao.SysUserOfficeDao;
@@ -50,7 +51,7 @@ public class SysUserOfficeService extends BaseService<SysUserOfficeDao, SysUserO
             List<Long> userIds = userOffices.getRows().stream().parallel()
                     .map(SysUserOffice::getSysUserId)
                     .collect(Collectors.toList());
-            sysUsers = sysUserService.list(sysUserService.lambdaQuery().in(SysUser::getId, userIds));
+            sysUsers = sysUserService.list(Wrappers.lambdaQuery(new SysUser()).in(SysUser::getId, userIds));
         }
         sysUserDataTable.setRows(sysUsers);
         sysUserDataTable.setTotal(userOffices.getTotal());
@@ -69,7 +70,7 @@ public class SysUserOfficeService extends BaseService<SysUserOfficeDao, SysUserO
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void removeUsers(Long officeId, Long[] userIds) {
-        remove(lambdaQuery().eq(SysUserOffice::getSysOfficeId, officeId).in(SysUserOffice::getSysUserId, userIds));
+        remove(Wrappers.lambdaQuery(new SysUserOffice()).eq(SysUserOffice::getSysOfficeId, officeId).in(SysUserOffice::getSysUserId, userIds));
     }
 
     /**

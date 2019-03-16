@@ -1,5 +1,6 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.DataTable;
@@ -69,7 +70,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
      */
     @Override
     public List<JsTree> selectMenuTreeHasSelectDis(Long roleId,Boolean disable) {
-        List<SysRoleMenu> roleMenus = sysRoleMenuService.list(sysRoleMenuService.lambdaQuery().eq(SysRoleMenu::getSysRoleId, roleId));
+        List<SysRoleMenu> roleMenus = sysRoleMenuService.list(Wrappers.lambdaQuery(new SysRoleMenu()).eq(SysRoleMenu::getSysRoleId, roleId));
         return sysMenuService.list().stream().parallel().map(menu -> {
             JsTree jt = new JsTree();
             jt.setId(menu.getId().toString());
@@ -108,7 +109,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
      */
     @Override
     public List<SysRole> ListSysRoleUseable() {
-        return list(lambdaQuery().eq(SysRole::getDelFlag, Global.DEL_FLAG_NORMAL).eq(SysRole::getUseable, Global.YES));
+        return list(Wrappers.lambdaQuery(new SysRole()).eq(SysRole::getDelFlag, Global.DEL_FLAG_NORMAL).eq(SysRole::getUseable, Global.YES));
     }
 
     /**
@@ -136,11 +137,11 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
      */
     @Override
     public List<SysRole> listSysRoleByUser(Long userId) {
-        List<Long> roleIds = sysUserRoleService.list(sysUserRoleService.lambdaQuery().eq(SysUserRole::getSysUserId, userId))
+        List<Long> roleIds = sysUserRoleService.list(Wrappers.lambdaQuery(new SysUserRole()).eq(SysUserRole::getSysUserId, userId))
                 .stream().parallel()
                 .map(SysUserRole::getSysRoleId)
                 .collect(Collectors.toList());
-        return list(lambdaQuery().in(SysRole::getId, roleIds).eq(SysRole::getDelFlag, Global.DEL_FLAG_NORMAL).eq(SysRole::getUseable, Global.YES));
+        return list(Wrappers.lambdaQuery(new SysRole()).in(SysRole::getId, roleIds).eq(SysRole::getDelFlag, Global.DEL_FLAG_NORMAL).eq(SysRole::getUseable, Global.YES));
     }
 
     /**
@@ -154,7 +155,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
     public void insertSysRole(Long userId, Long[] ids) {
 
         //删除现有的用户角色
-        sysUserRoleService.remove(sysUserRoleService.lambdaQuery().eq(SysUserRole::getSysUserId, userId));
+        sysUserRoleService.remove(Wrappers.lambdaQuery(new SysUserRole()).eq(SysUserRole::getSysUserId, userId));
         if (null != ids && ids.length > 0) {
             List<SysUserRole> sysUserRoles = Arrays.stream(ids).parallel()
                     .map(roleId -> new SysUserRole(userId, roleId))
@@ -178,7 +179,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
         saveOrUpdate(sysRole);
         Long roleId = sysRole.getId();
         //删除现有的 角色 菜单
-        sysRoleMenuService.remove(sysRoleMenuService.lambdaQuery().eq(SysRoleMenu::getSysRoleId, roleId));
+        sysRoleMenuService.remove(Wrappers.lambdaQuery(new SysRoleMenu()).eq(SysRoleMenu::getSysRoleId, roleId));
         if (null != menuIds && menuIds.length > 0) {
             List<SysRoleMenu> sysRoleMenu = Arrays.stream(menuIds).parallel()
                     .map(menuId -> new SysRoleMenu(menuId, roleId))
@@ -197,7 +198,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
      */
     @Override
     public Boolean checkRoleCode(String code, Long id) {
-        SysRole sysRole = getOne(lambdaQuery().eq(SysRole::getCode, code));
+        SysRole sysRole = getOne(Wrappers.lambdaQuery(new SysRole()).eq(SysRole::getCode, code));
         return sysRole == null || !id.equals(0L) && sysRole.getId().equals(id);
     }
 

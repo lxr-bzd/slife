@@ -136,7 +136,7 @@ public class SysUserService extends BaseService<SysUserDao, SysUser> implements 
      */
     @Override
     public Boolean checkLoginName(String loginName, Long id) {
-        SysUser sysUser = getOne(lambdaQuery().eq(SysUser::getLoginName, loginName));
+        SysUser sysUser = getOne(Wrappers.lambdaQuery(new SysUser()).eq(SysUser::getLoginName, loginName));
         return sysUser == null || !id.equals(0L) && sysUser.getId().equals(id);
     }
 
