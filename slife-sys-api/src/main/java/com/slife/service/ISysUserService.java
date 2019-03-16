@@ -76,6 +76,4 @@ public interface ISysUserService  extends IBaseService<SysUser> {
      * @param ids
      */
      void updateSysUser(SysUser sysUser, Long[] ids) ;
-
-    DataTable<T> pageSearch1(DataTable<T> dt);
 }

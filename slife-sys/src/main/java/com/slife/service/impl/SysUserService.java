@@ -1,5 +1,7 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
@@ -170,53 +172,5 @@ public class SysUserService extends BaseService<SysUserDao, SysUser> implements 
         //操作角色
         sysRoleService.insertSysRole(sysUser.getId(), ids);
 
-    }
-
-    private void loadSearchParam(Map<String, Object> params, QueryChainWrapper<SysUser> wrapper) {
-        if (!CollectionUtils.isEmpty(params)) {
-            params.forEach((searchKey, param) -> {
-                if (idLoadCnd(SearchParam.SEARCH_EQ, searchKey, param)) {
-                    wrapper.eq(searchKey.split(SearchParam.SEARCH_EQ)[1], param);
-                } else if (idLoadCnd(SearchParam.SEARCH_LLIKE, searchKey, param)) {
-                    wrapper.likeLeft(searchKey.split(SearchParam.SEARCH_LLIKE)[1], String.valueOf(param));
-                } else if (idLoadCnd(SearchParam.SEARCH_RLIKE, searchKey, param)) {
-                    wrapper.likeRight(searchKey.split(SearchParam.SEARCH_RLIKE)[1], String.valueOf(param));
-                } else if (idLoadCnd(SearchParam.SEARCH_LIKE, searchKey, param)) {
-                    wrapper.like(searchKey.split(SearchParam.SEARCH_LIKE)[1], String.valueOf(param));
-                }
-            });
-        }
-    }
-
-    private void loadSort(Map<String, String> sorts, QueryChainWrapper<SysUser> wrapper) {
-        if (!CollectionUtils.isEmpty(sorts)) {
-            sorts.forEach((column, sort) -> {
-                if ("asc".equalsIgnoreCase(sort)) {
-                    wrapper.orderByAsc(column);
-                } else {
-                    wrapper.orderByDesc(column);
-                }
-            });
-        }
-    }
-
-    /**
-     * 分页 搜索
-     *
-     * @param dt
-     * @return
-     */
-    @Override
-    public DataTable<SysUser> pageSearch1(DataTable dt) {
-        Page<SysUser> page = new Page<>(dt.getPageNumber(), dt.getPageSize());
-//        LambdaQueryChainWrapper<SysUser> wrapper = lambdaQuery();
-//        LambdaQueryChainWrapper<T> wrapper = lambdaQuery();
-//        QueryChainWrapper<SysUser> wrapper = query();
-//        loadSearchParam(dt.getSearchParams(), wrapper);
-//        loadSort(dt.getSorts(), wrapper);
-        page(page);
-        dt.setTotal((int) page.getTotal());
-        dt.setRows(page.getRecords());
-        return dt;
     }
 }

@@ -43,9 +43,6 @@ management:
 
 logging.level.project.user.UserClient: DEBUG
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.slife.entity
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: com.slife.entity

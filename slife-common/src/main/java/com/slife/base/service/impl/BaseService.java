@@ -1,27 +1,21 @@
 package com.slife.base.service.impl;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.enums.SqlLike;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.slife.base.entity.TreeEntity;
 import com.slife.base.service.IBaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.base.vo.JsTree;
 import com.slife.constant.SearchParam;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.slife.util.StringUtils;
 import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 
 /**
  * @author chen
@@ -65,23 +59,7 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
      * @param params
      * @param wrapper
      */
-    private void loadSearchParam(Map<String, Object> params, LambdaQueryChainWrapper wrapper) {
-        if (!CollectionUtils.isEmpty(params)) {
-            params.forEach((searchKey, param) -> {
-                if (idLoadCnd(SearchParam.SEARCH_EQ, searchKey, param)) {
-                    wrapper.eq(searchKey.split(SearchParam.SEARCH_EQ)[1], param);
-                } else if (idLoadCnd(SearchParam.SEARCH_LLIKE, searchKey, param)) {
-                    wrapper.likeLeft(searchKey.split(SearchParam.SEARCH_LLIKE)[1], String.valueOf(param));
-                } else if (idLoadCnd(SearchParam.SEARCH_RLIKE, searchKey, param)) {
-                    wrapper.likeRight(searchKey.split(SearchParam.SEARCH_RLIKE)[1], String.valueOf(param));
-                } else if (idLoadCnd(SearchParam.SEARCH_LIKE, searchKey, param)) {
-                    wrapper.like(searchKey.split(SearchParam.SEARCH_LIKE)[1], String.valueOf(param));
-                }
-            });
-        }
-    }
-
-    private void loadSearchParam(Map<String, Object> params, QueryChainWrapper<T> wrapper) {
+    private void loadSearchParam(Map<String, Object> params, QueryWrapper<T> wrapper) {
         if (!CollectionUtils.isEmpty(params)) {
             params.forEach((searchKey, param) -> {
                 if (idLoadCnd(SearchParam.SEARCH_EQ, searchKey, param)) {
@@ -100,25 +78,13 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
     /**
      * 加载 排序条件
      */
-    private void loadSort(Map<String, String> sorts, LambdaQueryChainWrapper wrapper) {
+    private void loadSort(Map<String, String> sorts, QueryWrapper<T> wrapper) {
         if (!CollectionUtils.isEmpty(sorts)) {
             sorts.forEach((column, sort) -> {
                 if ("asc".equalsIgnoreCase(sort)) {
-                    wrapper.orderByAsc(column);
+                    wrapper.orderByAsc(StringUtils.humpToLine(column));
                 } else {
-                    wrapper.orderByDesc(column);
-                }
-            });
-        }
-    }
-
-    private void loadSort(Map<String, String> sorts, QueryChainWrapper<T> wrapper) {
-        if (!CollectionUtils.isEmpty(sorts)) {
-            sorts.forEach((column, sort) -> {
-                if ("asc".equalsIgnoreCase(sort)) {
-                    wrapper.orderByAsc(column);
-                } else {
-                    wrapper.orderByDesc(column);
+                    wrapper.orderByDesc(StringUtils.humpToLine(column));
                 }
             });
         }
@@ -133,8 +99,7 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
     @Override
     public DataTable<T> pageSearch(DataTable<T> dt) {
         Page<T> page = new Page<>(dt.getPageNumber(), dt.getPageSize());
-//        LambdaQueryChainWrapper<T> wrapper = lambdaQuery();
-        QueryChainWrapper<T> wrapper = query();
+        QueryWrapper wrapper = Wrappers.query();
         loadSearchParam(dt.getSearchParams(), wrapper);
         loadSort(dt.getSorts(), wrapper);
         page(page, wrapper);
