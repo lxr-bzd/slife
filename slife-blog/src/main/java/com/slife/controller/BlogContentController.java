@@ -60,7 +60,7 @@ public class BlogContentController extends BaseController {
     @PostMapping(value = "/create")
     @ResponseBody
     public ReturnDTO create(BlogContent blogContent) {
-        blogContentService.insert(blogContent);
+        blogContentService.save(blogContent);
         return ReturnDTOUtil.success();
     }
 
@@ -69,7 +69,7 @@ public class BlogContentController extends BaseController {
     @PostMapping(value = "/delete")
     @ResponseBody
     public ReturnDTO delete(@RequestParam("ids") List<Long> ids, ServletRequest request) {
-        boolean success = blogContentService.deleteBatchIds(ids);
+        boolean success = blogContentService.removeByIds(ids);
         if (success) {
             return ReturnDTOUtil.success();
         }
