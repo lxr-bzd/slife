@@ -51,6 +51,7 @@ mybatis-plus:
       id-type: id_worker
       field-strategy: default
       db-type: mysql
+    banner: false #关闭MyBatis-Plus自带的打印Banner
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
