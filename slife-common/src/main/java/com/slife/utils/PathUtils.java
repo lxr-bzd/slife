@@ -1,4 +1,4 @@
-package com.slife.util;
+package com.slife.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;

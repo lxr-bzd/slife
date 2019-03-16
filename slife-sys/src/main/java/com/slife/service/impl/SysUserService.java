@@ -1,26 +1,15 @@
 package com.slife.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
 import com.slife.base.service.impl.BaseService;
-import com.slife.base.vo.DataTable;
-import com.slife.constant.SearchParam;
 import com.slife.dao.SysUserDao;
 import com.slife.entity.SysUser;
 import com.slife.service.ISysRoleService;
 import com.slife.service.ISysUserService;
-import com.slife.util.PasswordUtils;
-import org.apache.poi.ss.formula.functions.T;
-import org.assertj.core.util.Strings;
+import com.slife.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
-import java.util.Map;
 
 /**
  *

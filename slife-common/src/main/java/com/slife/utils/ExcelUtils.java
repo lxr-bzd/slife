@@ -1,4 +1,4 @@
-package com.slife.util;
+package com.slife.utils;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;

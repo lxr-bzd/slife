@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2005-2012 springside.org.cn
  */
-package com.slife.util;
+package com.slife.utils;
 
 import org.apache.commons.lang3.Validate;
 

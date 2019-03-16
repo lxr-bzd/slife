@@ -1,4 +1,4 @@
-package com.slife.util;
+package com.slife.utils;
 
 /**
  * Created by chen on 2017/9/1.

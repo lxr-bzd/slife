@@ -1,6 +1,6 @@
 package com.slife.ext;
 
-import com.slife.util.ApplicationContextRegister;
+import com.slife.utils.ApplicationContextRegister;
 import com.slife.utils.ExtUtils;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;

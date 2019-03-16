@@ -4,7 +4,7 @@ import com.slife.base.vo.DataTable;
 import com.slife.constants.ActivitiConstants;
 import com.slife.dto.TaskDTO;
 import com.slife.shiro.SlifeSysUser;
-import com.slife.util.StringUtils;
+import com.slife.utils.StringUtils;
 import com.slife.utils.ExtUtils;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;

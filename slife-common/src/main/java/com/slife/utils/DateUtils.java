@@ -1,4 +1,4 @@
-package com.slife.util;
+package com.slife.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

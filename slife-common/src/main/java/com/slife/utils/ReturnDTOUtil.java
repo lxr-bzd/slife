@@ -1,4 +1,4 @@
-package com.slife.util;
+package com.slife.utils;
 
 
 import com.slife.base.entity.ReturnDTO;

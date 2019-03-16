@@ -5,7 +5,7 @@ import com.slife.base.vo.DataTable;
 import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import com.slife.service.ProcessService;
-import com.slife.util.ReturnDTOUtil;
+import com.slife.utils.ReturnDTOUtil;
 import com.slife.dto.ProcessDefDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

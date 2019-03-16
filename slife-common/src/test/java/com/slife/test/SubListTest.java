@@ -1,7 +1,7 @@
 package com.slife.test;
 
 import com.alibaba.fastjson.JSON;
-import com.slife.util.page.PageUtils;
+import com.slife.utils.page.PageUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;

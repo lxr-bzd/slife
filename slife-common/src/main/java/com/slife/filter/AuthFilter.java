@@ -5,7 +5,7 @@ import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import com.slife.rest.JwtProperties;
 import com.slife.rest.JwtTokenUtil;
-import com.slife.util.RenderUtils;
+import com.slife.utils.RenderUtils;
 import io.jsonwebtoken.JwtException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

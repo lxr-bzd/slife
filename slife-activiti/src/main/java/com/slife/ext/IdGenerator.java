@@ -1,6 +1,6 @@
 package com.slife.ext;
 
-import com.slife.util.SnowflakeIdGenerator;
+import com.slife.utils.SnowflakeIdGenerator;
 
 /**
  * @Author felixu

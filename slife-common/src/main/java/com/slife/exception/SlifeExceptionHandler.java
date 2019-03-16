@@ -3,7 +3,7 @@ package com.slife.exception;
 
 import com.slife.base.entity.ReturnDTO;
 import com.slife.enums.HttpCodeEnum;
-import com.slife.util.ReturnDTOUtil;
+import com.slife.utils.ReturnDTOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

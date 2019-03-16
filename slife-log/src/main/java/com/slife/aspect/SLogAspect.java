@@ -2,8 +2,8 @@ package com.slife.aspect;
 
 
 
-import com.slife.util.IPUtils;
-import com.slife.util.ServletUtils;
+import com.slife.utils.IPUtils;
+import com.slife.utils.ServletUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

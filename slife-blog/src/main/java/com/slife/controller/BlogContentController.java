@@ -6,7 +6,7 @@ import com.slife.base.entity.ReturnDTO;
 import com.slife.base.vo.DataTable;
 import com.slife.entity.BlogContent;
 import com.slife.service.IBlogContentService;
-import com.slife.util.ReturnDTOUtil;
+import com.slife.utils.ReturnDTOUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 
 /**

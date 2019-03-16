@@ -6,16 +6,11 @@ import com.slife.dao.SlifeLogDao;
 import com.slife.entity.SlifeLog;
 import com.slife.shiro.ShiroUser;
 import com.slife.shiro.SlifeSysUser;
-import com.slife.util.ApplicationContextRegister;
-import com.slife.util.IPUtils;
-import com.slife.util.ServletUtils;
+import com.slife.utils.ApplicationContextRegister;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Date;
 
 /**
  *

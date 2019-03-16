@@ -1,4 +1,4 @@
-package com.slife.util;
+package com.slife.utils;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

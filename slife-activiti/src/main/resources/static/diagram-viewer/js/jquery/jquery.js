@@ -645,7 +645,7 @@ jQuery.extend({
 				}
 			}
 
-		// A special, fast, case for the most util use of each
+		// A special, fast, case for the most utils use of each
 		} else {
 			if ( isObj ) {
 				for ( name in object ) {
@@ -2323,7 +2323,7 @@ jQuery.fn.extend({
 				ret = elem.value;
 
 				return typeof ret === "string" ?
-					// handle most util string cases
+					// handle most utils string cases
 					ret.replace(rreturn, "") :
 					// handle cases where value is null/undef or number
 					ret == null ? "" : ret;
@@ -7087,7 +7087,7 @@ jQuery.fn.extend({
 	}
 });
 
-// Attach a bunch of functions for handling util AJAX events
+// Attach a bunch of functions for handling utils AJAX events
 jQuery.each( "ajaxStart ajaxStop ajaxComplete ajaxError ajaxSuccess ajaxSend".split( " " ), function( i, o ){
 	jQuery.fn[ o ] = function( f ){
 		return this.on( o, f );

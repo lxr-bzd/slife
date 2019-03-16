@@ -1,4 +1,4 @@
-package com.slife.util;
+package com.slife.utils;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 

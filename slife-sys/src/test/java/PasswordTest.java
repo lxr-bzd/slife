@@ -1,5 +1,5 @@
-import com.slife.util.Digests;
-import com.slife.util.Encodes;
+import com.slife.utils.Digests;
+import com.slife.utils.Encodes;
 
 /**
  * Created by chen on 2017/7/27.

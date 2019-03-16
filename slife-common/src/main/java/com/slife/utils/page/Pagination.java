@@ -1,4 +1,4 @@
-package com.slife.util.page;
+package com.slife.utils.page;
 
 import java.util.List;
 

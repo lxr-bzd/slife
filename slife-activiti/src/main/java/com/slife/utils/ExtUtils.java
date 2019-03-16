@@ -7,8 +7,6 @@ import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import com.slife.dto.ProcessDefDTO;
 import com.slife.service.ISysUserService;
-import com.slife.util.ApplicationContextRegister;
-import com.slife.util.StringUtils;
 import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
 import org.activiti.engine.repository.Deployment;

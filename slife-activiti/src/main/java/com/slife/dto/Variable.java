@@ -1,7 +1,7 @@
 package com.slife.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.slife.util.StringUtils;
+import com.slife.utils.StringUtils;
 import com.slife.utils.DateConverter;
 import com.slife.utils.PropertyType;
 import org.apache.commons.beanutils.ConvertUtils;

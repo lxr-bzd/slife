@@ -2,8 +2,8 @@ package com.slife.controller;
 
 import com.slife.base.entity.ReturnDTO;
 import com.slife.constant.Setting;
-import com.slife.util.FileUtils;
-import com.slife.util.ReturnDTOUtil;
+import com.slife.utils.FileUtils;
+import com.slife.utils.ReturnDTOUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
