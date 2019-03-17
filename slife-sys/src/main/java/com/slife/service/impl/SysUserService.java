@@ -1,5 +1,6 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.slife.base.service.impl.BaseService;
 import com.slife.dao.SysUserDao;
@@ -125,7 +126,7 @@ public class SysUserService extends BaseService<SysUserDao, SysUser> implements 
      */
     @Override
     public Boolean checkLoginName(String loginName, Long id) {
-        SysUser sysUser = getOne(Wrappers.lambdaQuery(new SysUser()).eq(SysUser::getLoginName, loginName));
+        SysUser sysUser = getOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getLoginName, loginName));
         return sysUser == null || !id.equals(0L) && sysUser.getId().equals(id);
     }
 

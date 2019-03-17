@@ -1,5 +1,6 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
@@ -42,7 +43,7 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
     public void disableMenu(Long id) {
         SysMenu sysMenu = getById(id);
         Optional.ofNullable(sysMenu).orElseThrow(() -> new SlifeException(HttpCodeEnum.NOT_FOUND));
-        List<SysMenu> delList = list(Wrappers.lambdaQuery(new SysMenu()).likeRight(SysMenu::getPath, sysMenu.getPath()));
+        List<SysMenu> delList = list(new QueryWrapper<SysMenu>().lambda().likeRight(SysMenu::getPath, sysMenu.getPath()));
         delList.stream().parallel().forEach(menu -> menu.setShowFlag(Global.NO));
         updateBatchById(delList);
         //TODO 判断是否有角色，有角色要清理角色与资源关系
@@ -60,12 +61,12 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
     public Boolean deleteMenu(Long id) {
         SysMenu sysMenu = getById(id);
         Optional.ofNullable(sysMenu).orElseThrow(() -> new SlifeException(HttpCodeEnum.NOT_FOUND));
-        List<Long> ids = list(Wrappers.lambdaQuery(new SysMenu()).likeRight(SysMenu::getPath, sysMenu.getPath()))
+        List<Long> ids = list(new QueryWrapper<SysMenu>().lambda().likeRight(SysMenu::getPath, sysMenu.getPath()))
                 .stream().parallel().map(SysMenu::getId)
                 .collect(Collectors.toList());
         removeByIds(ids);
         //删除对应的角色关联
-        sysRoleMenuService.remove(Wrappers.lambdaQuery(new SysRoleMenu()).in(SysRoleMenu::getSysMenuId, ids));
+        sysRoleMenuService.remove(new QueryWrapper<SysRoleMenu>().lambda().in(SysRoleMenu::getSysMenuId, ids));
         return true;
     }
 
@@ -152,6 +153,6 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
      */
     @Override
     public List<JsTree> getMenuTree() {
-        return makeTree(list(Wrappers.lambdaQuery(new SysMenu()).orderByAsc(SysMenu::getSort)));
+        return makeTree(list(new QueryWrapper<SysMenu>().lambda().orderByAsc(SysMenu::getSort)));
     }
 }
