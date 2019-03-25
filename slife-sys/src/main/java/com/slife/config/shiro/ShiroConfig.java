@@ -1,13 +1,5 @@
 package com.slife.config.shiro;
 
-/**
- * Created by chen on 2017/7/14.
- * <p>
- * Email 122741482@qq.com
- * <p>
- * Describe:
- */
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -19,7 +11,6 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
-import org.slf4j.Logger;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -28,18 +19,25 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * shiro的配置类
- * @author Administrator
  *
+ * @author jamen
+ * @author felixu
+ * @date 2017.7.14
  */
 @Slf4j
 @Configuration
 public class ShiroConfig {
 
-    private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
-
+    /**
+     * 为了填Spring Boot升级到2.x之后，整合Shiro的一个大坑
+     * 在2.x中Forward之后ShiroFilter重新被加载
+     *
+     * @return FilterRegistrationBean<DelegatingFilterProxy>
+     */
     @Bean
     public FilterRegistrationBean<DelegatingFilterProxy> delegatingFilterProxy(){
         FilterRegistrationBean<DelegatingFilterProxy> filterRegistrationBean = new FilterRegistrationBean<>();
@@ -55,65 +53,78 @@ public class ShiroConfig {
         return filterRegistrationBean;
     }
 
-   @Bean
-   public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
-        //SecurityManager manager= securityManager(authRealm);
-        ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
+    /**
+     * 核心过滤器
+     *
+     * @param securityManager SessionsSecurityManager
+     * @return ShiroFilter
+     */
+    @Bean
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+        ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(securityManager);
-        //配置登录的url和登录成功的url
+
+        // 配置登陆url
         bean.setLoginUrl("/login");
+        // 配置登陆成功url
         bean.setSuccessUrl("/index");
-        //配置访问权限
-        LinkedHashMap<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
 
-        filterChainDefinitionMap.put("/logout","logout");
-
-
-        //开放的静态资源
-        filterChainDefinitionMap.put("/favicon.ico", "anon");//网站图标
-        filterChainDefinitionMap.put("/css/**","anon");
-        filterChainDefinitionMap.put("/js/**","anon");
-        filterChainDefinitionMap.put("/img/**","anon");
-        filterChainDefinitionMap.put("/fonts/**","anon");
-
-        filterChainDefinitionMap.put("/health/**","anon");
-        filterChainDefinitionMap.put("/env/**","anon");
-        filterChainDefinitionMap.put("/metrics/**","anon");
-        filterChainDefinitionMap.put("/trace/**","anon");
-        filterChainDefinitionMap.put("/dump/**","anon");
-        filterChainDefinitionMap.put("/jolokia/**","anon");
-        filterChainDefinitionMap.put("/info/**","anon");
-        filterChainDefinitionMap.put("/logfile/**","anon");
-        filterChainDefinitionMap.put("/refresh/**","anon");
-        filterChainDefinitionMap.put("/flyway/**","anon");
-        filterChainDefinitionMap.put("/liquibase/**","anon");
-        filterChainDefinitionMap.put("/heapdump/**","anon");
-        filterChainDefinitionMap.put("/loggers/**","anon");
-        filterChainDefinitionMap.put("/auditevents/**","anon");
-
-
-        filterChainDefinitionMap.put("/layouts/**","anon");
-        filterChainDefinitionMap.put("/attach/**","anon");
-
-
-        filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/*.*", "authc");
-        bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        // 配置访问权限
+        bean.setFilterChainDefinitionMap(fillFilterChainDefinitionMap());
         return bean;
+    }
+
+    /**
+     * url拦截器配置填充
+     *
+     * @return FilterChainDefinitionMap
+     */
+   private Map<String, String> fillFilterChainDefinitionMap() {
+        return new LinkedHashMap<String, String>() {{
+            // 登出，可自定义，做些自定义操作
+            put("/logout","logout");
+
+            // 不需要权限
+            put("/favicon.ico", "anon");
+            put("/css/**","anon");
+            put("/js/**","anon");
+            put("/img/**","anon");
+            put("/fonts/**","anon");
+            put("/health/**","anon");
+            put("/env/**","anon");
+            put("/metrics/**","anon");
+            put("/trace/**","anon");
+            put("/dump/**","anon");
+            put("/jolokia/**","anon");
+            put("/info/**","anon");
+            put("/logfile/**","anon");
+            put("/refresh/**","anon");
+            put("/flyway/**","anon");
+            put("/liquibase/**","anon");
+            put("/heapdump/**","anon");
+            put("/loggers/**","anon");
+            put("/auditevents/**","anon");
+            put("/layouts/**","anon");
+            put("/attach/**","anon");
+
+            // 需要权限
+            put("/*", "authc");
+            put("/**", "authc");
+            put("/*.*", "authc");
+        }};
    }
 
-    // TODO: 2019-03-14 可配置的cache
-//    /**
-//     * 创建自定义的AuthorizingRealm
-//     * 关于缓存可以选择使用Ehcache或者Redis
-//     * {@link org.apache.shiro.cache.ehcache.EhCacheManager}
-//     * {@link RedisCacheManager}
-//     * {@link CacheConfig}
-//     *
-//     * @param cacheManager 这里注入接口，在yaml文件中配置具体使用Ehcache还是Redis. {@link CacheConfig}
-//     * @return AuthorizingRealm
-//     */
+
+    /**
+     * 创建自定义的AuthorizingRealm
+     * 关于缓存可以选择使用Ehcache或者Redis
+     * {@link org.apache.shiro.cache.ehcache.EhCacheManager}
+     * {@link RedisCacheManager}
+     * {@link CacheConfig}
+     *
+     * @param cacheManager 这里注入接口，在yaml文件中配置具体使用Ehcache还是Redis.
+     * @return AuthorizingRealm
+     */
     @Bean
     public AuthorizingRealm authorizingRealm(CacheManager cacheManager) {
         AuthRealm realm = new AuthRealm();
@@ -122,14 +133,15 @@ public class ShiroConfig {
     }
 
 
-    //配置核心安全事务管理器
+    /**
+     * 在Spring Boot2.x中如果直接使用SecurityManager不会生效，而是使用SessionSecurityManager
+     *
+     * @param authRealm {@link AuthRealm}
+     * @return {@link SessionsSecurityManager}
+     */
     @Bean
-//    public SecurityManager securityManager(@Qualifier("authRealm")AuthRealm authRealm,@Qualifier("redisCacheManager")CacheManager
-//            cacheManager) {
-    public SessionsSecurityManager securityManager(AuthorizingRealm authRealm) {
-
-       logger.info("--------------shiro已经加载----------------");
-        DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
+    public SessionsSecurityManager securityManager(AuthorizingRealm authRealm, CookieRememberMeManager rememberMeManager) {
+        DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         // 设置realm.
         manager.setRealm(authRealm);
 
@@ -137,56 +149,44 @@ public class ShiroConfig {
         //注意:开发时请先关闭，如不关闭热启动会报错
 //        manager.setCacheManager(cacheManager);//这个如果执行多次，也是同样的一个对象;
         //注入记住我管理器;
-        manager.setRememberMeManager(rememberMeManager());
-
-
+        manager.setRememberMeManager(rememberMeManager);
+        log.info("[ShiroConfig#securityManager] ---> shiro已经加载");
         return manager;
     }
 
     /**
-     * shiro缓存管理器;
-     * 需要注入对应的其它的实体类中：
-     * 1、安全管理器：securityManager
-     * 可见securityManager是整个shiro的核心；
+     * Cookie对象
      *
-     * @return
-     */
-
-
-
-
-
-    /**
-     * cookie对象;
      * @return
      * */
     @Bean
     public SimpleCookie rememberMeCookie(){
-        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+        // 这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
-        //<!-- 记住我cookie生效时间30天 ,单位秒;-->
-       /* simpleCookie.setMaxAge(259200);*/
+        // 单位秒
         simpleCookie.setMaxAge(20);
-        logger.info("--------------rememberMeCookie init---------------"+simpleCookie);
+        log.info("[ShiroConfig#rememberMeCookie] ---> rememberMeCookie init success");
         return simpleCookie;
     }
+
     /**
-     * cookie管理对象;
-     * @return
+     * Cookie管理对象
+     *
+     * @return {@link CookieRememberMeManager}
      */
     @Bean
-    public CookieRememberMeManager rememberMeManager(){
+    public CookieRememberMeManager rememberMeManager(SimpleCookie rememberMeCookie){
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-        cookieRememberMeManager.setCookie(rememberMeCookie());
-
-       logger.info("--------------rememberMeManager init---------------"+cookieRememberMeManager);
+        cookieRememberMeManager.setCookie(rememberMeCookie);
+        log.info("[ShiroConfig#rememberMeManager] ---> rememberMeManager init success");
         return cookieRememberMeManager;
     }
 
 
     /**
      * 保证实现了Shiro内部lifecycle函数的bean执行
-     * @return
+     *
+     * @return LifecycleBeanPostProcessor
      */
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
@@ -195,7 +195,8 @@ public class ShiroConfig {
 
     /**
      * AOP式方法级权限检查
-     * @return
+     *
+     * @return DefaultAdvisorAutoProxyCreator
      */
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
@@ -203,9 +204,9 @@ public class ShiroConfig {
         creator.setProxyTargetClass(true);
         return creator;
     }
+
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
-      //  SecurityManager manager= securityManager(authRealm);
         AuthorizationAttributeSourceAdvisor advisor=new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;
