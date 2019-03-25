@@ -12,18 +12,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by chen on 2017/5/16.
- * <p>
- * <p>
- * Describe:
+ * 通过访问http://localhost:${server.port}/druid/datasource.html查看监控信息
+ *
+ * @author jamen
+ * @date 2017.5.16
  */
 @Configuration
 public class DruidConfig {
-    /**
-     * 注册DruidServlet
-     * http://localhost:8080/druid/datasource.html查看监控信息
-     * @return
-     */
+
     @Bean
     public ServletRegistrationBean druidServletRegistrationBean() {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
@@ -32,16 +28,11 @@ public class DruidConfig {
         return servletRegistrationBean;
     }
 
-    /**
-     * 注册DruidFilter拦截
-     *
-     * @return
-     */
     @Bean
     public FilterRegistrationBean duridFilterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new WebStatFilter());
-        Map<String, String> initParams = new HashMap<String, String>();
+        Map<String, String> initParams = new HashMap<>(8);
         //设置忽略请求
         initParams.put("exclusions", "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*");
         filterRegistrationBean.setInitParameters(initParams);

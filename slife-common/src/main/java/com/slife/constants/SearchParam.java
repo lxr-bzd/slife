@@ -1,4 +1,4 @@
-package com.slife.constant;
+package com.slife.constants;
 
 /**
  * Created by chen on 2017/9/21.

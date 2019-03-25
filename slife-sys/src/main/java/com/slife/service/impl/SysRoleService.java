@@ -1,15 +1,14 @@
 package com.slife.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.base.vo.JsTree;
 import com.slife.base.vo.JsTreeState;
-import com.slife.constant.Global;
+import com.slife.constants.Global;
+import com.slife.constants.SettingsConstants;
 import com.slife.dao.SysRoleDao;
-import com.slife.entity.SysMenu;
 import com.slife.entity.SysRole;
 import com.slife.entity.SysRoleMenu;
 import com.slife.entity.SysUserRole;
@@ -22,7 +21,7 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -110,7 +109,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
      */
     @Override
     public List<SysRole> ListSysRoleUseable() {
-        return list(new QueryWrapper<SysRole>().lambda().eq(SysRole::getDelFlag, Global.DEL_FLAG_NORMAL).eq(SysRole::getUseable, Global.YES));
+        return list(new QueryWrapper<SysRole>().lambda().eq(SysRole::getDelFlag, SettingsConstants.DelFlag.NORMAL).eq(SysRole::getUseable, Global.YES));
     }
 
     /**
@@ -142,7 +141,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
                 .stream().parallel()
                 .map(SysUserRole::getSysRoleId)
                 .collect(Collectors.toList());
-        return list(new QueryWrapper<SysRole>().lambda().in(SysRole::getId, roleIds).eq(SysRole::getDelFlag, Global.DEL_FLAG_NORMAL).eq(SysRole::getUseable, Global.YES));
+        return list(new QueryWrapper<SysRole>().lambda().in(SysRole::getId, roleIds).eq(SysRole::getDelFlag, SettingsConstants.DelFlag.NORMAL).eq(SysRole::getUseable, Global.YES));
     }
 
     /**

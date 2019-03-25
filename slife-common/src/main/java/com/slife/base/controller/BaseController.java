@@ -1,6 +1,6 @@
 package com.slife.base.controller;
 
-import com.slife.constant.Setting;
+import com.slife.constants.Setting;
 import com.slife.utils.DateUtils;
 import com.slife.utils.ExcelUtils;
 import com.slife.utils.FileUtils;

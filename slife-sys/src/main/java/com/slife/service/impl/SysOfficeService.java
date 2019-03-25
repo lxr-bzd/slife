@@ -1,10 +1,9 @@
 package com.slife.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
-import com.slife.constant.Global;
+import com.slife.constants.Global;
 import com.slife.dao.SysOfficeDao;
 import com.slife.entity.SysOffice;
 import com.slife.service.ISysOfficeService;

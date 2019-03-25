@@ -9,7 +9,7 @@ import com.slife.base.entity.TreeEntity;
 import com.slife.base.service.IBaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.base.vo.JsTree;
-import com.slife.constant.SearchParam;
+import com.slife.constants.SearchParam;
 import com.slife.utils.StringUtils;
 import org.springframework.util.CollectionUtils;
 import java.util.Collections;

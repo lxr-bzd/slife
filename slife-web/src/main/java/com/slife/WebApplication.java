@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication(exclude={org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
 		org.activiti.spring.boot.SecurityAutoConfiguration.class})
-//@SpringBootApplication
 @EnableTransactionManagement
 public class WebApplication {
 

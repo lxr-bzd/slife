@@ -3,7 +3,8 @@ package com.slife.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.slife.base.entity.DataEntity;
-import com.slife.constant.Global;
+import com.slife.constants.Global;
+import com.slife.constants.SettingsConstants;
 
 /**
  * Created by chen on 2017/7/31.
@@ -17,7 +18,7 @@ public abstract class CompanyLinkEntity<T extends Model> extends DataEntity<T> {
 
     public CompanyLinkEntity() {
         super();
-        this.delFlag = Global.DEL_FLAG_NORMAL;
+        this.delFlag = SettingsConstants.DelFlag.NORMAL;
 
     }
 

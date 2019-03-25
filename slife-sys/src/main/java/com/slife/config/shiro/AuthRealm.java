@@ -1,7 +1,7 @@
 package com.slife.config.shiro;
 
-import com.slife.constant.Global;
-import com.slife.constant.Setting;
+import com.slife.constants.Global;
+import com.slife.constants.Setting;
 import com.slife.entity.SysRole;
 import com.slife.entity.SysUser;
 import com.slife.service.ISysRoleService;

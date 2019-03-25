@@ -9,7 +9,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.slife.constant.Global;
+import com.slife.constants.Global;
+import com.slife.constants.SettingsConstants;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
@@ -87,7 +88,7 @@ public abstract class DataEntity<T extends Model> extends BaseEntity<T> {
 
     public DataEntity() {
         super();
-        this.delFlag = Global.DEL_FLAG_NORMAL;
+        this.delFlag = SettingsConstants.DelFlag.NORMAL;
 
     }
 

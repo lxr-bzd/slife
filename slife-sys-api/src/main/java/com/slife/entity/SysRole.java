@@ -3,7 +3,7 @@ package com.slife.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.slife.constant.Global;
+import com.slife.constants.Global;
 import com.slife.enums.DataScopeEnum;
 import org.hibernate.validator.constraints.Length;
 

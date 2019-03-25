@@ -1,7 +1,7 @@
 package com.slife.controller;
 
 import com.slife.base.entity.ReturnDTO;
-import com.slife.constant.Setting;
+import com.slife.constants.Setting;
 import com.slife.utils.FileUtils;
 import com.slife.utils.ReturnDTOUtil;
 import io.swagger.annotations.ApiOperation;
