@@ -20,26 +20,6 @@
             <artifactId>slife-common</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.activiti</groupId>-->
-            <!--<artifactId>activiti-spring-boot-starter-rest-api</artifactId>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>mybatis</artifactId>-->
-                    <!--<groupId>org.mybatis</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>activation</artifactId>-->
-                    <!--<groupId>javax.activation</groupId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.activiti</groupId>-->
-            <!--<artifactId>activiti-spring-boot-starter-actuator</artifactId>-->
-        <!--</dependency>-->
-
         <!-- activiti -->
         <dependency>
             <groupId>org.activiti</groupId>
