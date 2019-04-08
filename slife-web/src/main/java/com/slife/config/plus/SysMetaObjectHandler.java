@@ -1,6 +1,8 @@
 package com.slife.config.plus;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.slife.constants.MybatisPlusConstants;
 import com.slife.shiro.SlifeSysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -23,22 +25,12 @@ public class SysMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.debug("[SysMetaObjectHandler#insertFill] ---> insert set createTime createBy updateTime updateBy param");
-        Object createDate = metaObject.getValue("createDate");
-        Object createId = metaObject.getValue("createId");
-        Object updateDate = metaObject.getValue("updateDate");
-        Object updateId = metaObject.getValue("updateId");
-        if (null == createDate) {
-            metaObject.setValue("createDate", new Date());
-        }
-        if (null == createId) {
-            metaObject.setValue("createId", SlifeSysUser.id());
-        }
-        if (null == updateDate) {
-            metaObject.setValue("updateDate", new Date());
-        }
-        if (null == updateId) {
-            metaObject.setValue("updateId", SlifeSysUser.id());
-        }
+        Long userId = SlifeSysUser.id();
+        Date now = new Date();
+        setInsertFieldValByName(MybatisPlusConstants.MetaObject.CREATE_DATE, now, metaObject);
+        setInsertFieldValByName(MybatisPlusConstants.MetaObject.CREATE_BY, userId, metaObject);
+        setInsertFieldValByName(MybatisPlusConstants.MetaObject.UPDATE_DATE, now, metaObject);
+        setInsertFieldValByName(MybatisPlusConstants.MetaObject.UPDATE_BY, userId, metaObject);
     }
 
     /**
@@ -48,9 +40,7 @@ public class SysMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         log.debug("[SysMetaObjectHandler#updateFill] ---> update set  updateTime updateBy param");
-        metaObject.setValue("updateDate", new Date());
-        metaObject.setValue("updateId", SlifeSysUser.id());
-
-
+        setUpdateFieldValByName(MybatisPlusConstants.MetaObject.UPDATE_DATE, new Date(), metaObject);
+        setUpdateFieldValByName(MybatisPlusConstants.MetaObject.UPDATE_BY, SlifeSysUser.id(), metaObject);
     }
 }

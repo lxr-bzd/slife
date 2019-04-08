@@ -72,8 +72,4 @@ public abstract class BaseEntity<T extends Model> extends Model<T> {
         BaseEntity<?> that = (BaseEntity<?>) obj;
         return null == this.getId() ? false : this.getId().equals(that.getId());
     }
-
-
-
-
 }
