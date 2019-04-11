@@ -1,21 +1,12 @@
 # 项目介绍
 
 Slife是一个使用`Spring Boot`搭建的企业级快速开发脚手架。
-    
-
-### [阿里云代金券 1888元，点击即可获取](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld) 
- 
-### [阿里云 MQ/前段监控--和PTS中间件体验包](https://promotion.aliyun.com/ntms/act/aliwareydssale.html?userCode=vf2b5zld) 
-  
-
-### 建议注册个新账户购买，享受2折 
-
 
 ## 技术栈
 
 Slife需要`Java 8`环境，推荐使用`IDEA`作为开发工具，以下是Slife所用到的技术：
 
-1. Spring Boot v1.5.4
+1. Spring Boot v2.0.5
 2. MySQL
 3. Freemark
 4. SiteMesh
@@ -24,6 +15,8 @@ Slife需要`Java 8`环境，推荐使用`IDEA`作为开发工具，以下是Slif
 7. mybatis、mybatisPlus
 8. redis
 9. Activiti v5.22
+
+**需要以前版本可以切换至master分支**
 
 ## 部署
 
@@ -251,17 +244,6 @@ Slife申请了`JetBrains`的全家桶授权，因为之前活跃人数只有两�
 ## 支持我们
 
 ## 友情链接
-
-## 阿里云优惠券
-
-[点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=vf2b5zld)
-
-
-[腾讯云](https://cloud.tencent.com/redirect.php?redirect=1005&cps_key=1cdaea7b77fe67188b187bce55796594&from=console)
-
-
-
-
 
 
 
